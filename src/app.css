@@ -1,0 +1,40 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --app-bg: #111b21;
+  --incoming-bg: #202c33; /* incoming msg, header, search input, footer */
+  --chosen-chat: #2a3942; /* chosen chat, send message input,  */
+  --dark-green: #005c4b; /* outgoing msg */
+  --light-green: #00a884; /* unread msg, login */
+  --blue: #53bdeb; 
+
+  --primary-text: #d1d7db;
+  --secondary-text: #8696a0; /* sidebar read msg, date, icons */
+  --message-text: #e9edef;
+  --dark-text: #3b4a54;
+  --header-icon-color: #aebac1;
+}
+
+input, button {
+  outline: none;
+  border: none;
+}
+
+body {
+  background-color: var(--app-bg);
+  font-family: Segoe UI,Helvetica Neue,Helvetica,Lucida Grande,Arial,Ubuntu,Cantarell,Fira Sans,sans-serif;
+  color: var(--primary-text);
+}
+
+.app {
+  height: 100vh;
+  max-width: 100vw;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
