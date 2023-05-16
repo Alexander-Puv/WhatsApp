@@ -1,7 +1,8 @@
 import { useContext } from 'react'
-import './app.css'
+import './App.css'
 import { AppContext } from './context/AppContext/AppContext'
-import Chat from './components/Chat/Chat'
+import Sidebar from './components/Sidebar/Sidebar'
+import Main from './components/Main/Main'
 import Login from './components/Login/Login'
 
 function App() {
@@ -9,8 +10,11 @@ function App() {
 
   return (
     <div className='app'>
-      {context?.idInstance ?
-        <Chat />
+      {context?.data ?
+        <div className='chat'>
+          <Sidebar />
+          <Main />
+        </div>
       :
         <Login />
       }
