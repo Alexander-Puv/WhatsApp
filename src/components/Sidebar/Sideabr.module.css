@@ -1,6 +1,29 @@
 .sidebar {
-  flex: 0;
+  flex: 0 0 30%;
+  max-width: 30%;
+  display: flex;
+  flex-direction: column;
 }
+
+/* header */
+
+.icons {
+  display: flex;
+  gap: 10px;
+}
+.icons > button {
+  padding: 8px;
+}
+
+/* side */
+
+.side {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* search */
 
 .search {
   height: 49px;
@@ -10,11 +33,26 @@
 }
 
 .search__main {
+  position: relative;
   flex: 1;
   padding: 0 32px 0 12px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background-color: var(--incoming-bg);
+  border-radius: 8px;
+}
+
+.search__input {
+  flex: 1;
+  height: 35px;
+  margin-left: 29px;
+  font-size: 0.9375rem;
+}
+
+.search__closeButton {
+  position: absolute;
+  right: 7px;
 }
 
 .filter {
@@ -25,4 +63,77 @@
 .filter svg {
   width: 20px;
   height: 20px;
+}
+
+/* chats */
+
+.chats {
+  flex: 1;
+}
+
+.chat {
+  height: 72px;
+  display: flex;
+  cursor: pointer;
+}
+
+.chat__left {
+  flex: 0;
+  padding: 0 13px 0 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.chat__left button {
+  width: 49px !important;
+  height: 49px !important;
+}
+
+
+
+.chat__right {
+  flex: 1;
+  max-width: calc(100% - 77px);
+  padding-right: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-bottom: 1px solid var(--chat-underline);
+}
+.chat__right span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chat__cell {
+  display: flex;
+  align-items: center;
+}
+
+.chat__title {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  font-size: 17px;
+  color: var(--primary-text);
+  overflow: hidden;
+  overflow-wrap: break-word;
+}
+
+.chat__time {
+  margin-top: 3px;
+  margin-left: 6px;
+  font-size: 12px;
+  line-height: 14px;
+  color: var(--secondary-text);
+}
+
+.chat__lastMessage {
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--secondary-text);
 }
