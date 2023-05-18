@@ -5,6 +5,25 @@ import { GoKebabVertical } from 'react-icons/go'
 import { VscClose } from 'react-icons/vsc'
 import cl from './Sideabr.module.css'
 import UserIcon from '../UI/UserIcon'
+import Chat, { ChatProps } from './Chat/Chat'
+
+const chats: ChatProps[] = [
+  {title: 'User', date: new Date(), lastMessage: 'Nothing'},
+  {title: 'User2', date: new Date('2023-5-17'), lastMessage: 'Anything'},
+  {title: 'User3', date: new Date('2023-5-12'), lastMessage: 'Something'},
+  {title: 'User', date: new Date(), lastMessage: 'Nothing'},
+  {title: 'User2', date: new Date('2023-5-17'), lastMessage: 'Anything'},
+  {title: 'User3', date: new Date('2023-5-12'), lastMessage: 'Something'},
+  {title: 'User', date: new Date(), lastMessage: 'Nothing'},
+  {title: 'User2', date: new Date('2023-5-17'), lastMessage: 'Anything'},
+  {title: 'User3', date: new Date('2023-5-12'), lastMessage: 'Something'},
+  {title: 'User', date: new Date(), lastMessage: 'Nothing'},
+  {title: 'User2', date: new Date('2023-5-17'), lastMessage: 'Anything'},
+  {title: 'User3', date: new Date('2023-5-12'), lastMessage: 'Something'},
+  {title: 'User', date: new Date(), lastMessage: 'Nothing'},
+  {title: 'User2', date: new Date('2023-5-17'), lastMessage: 'Anything'},
+  {title: 'User3', date: new Date('2023-5-12'), lastMessage: 'Something'},
+]
 
 const Sidebar = () => {
   const [searchQuery, setSearchQuery] = useState('')
@@ -41,22 +60,9 @@ const Sidebar = () => {
         </div>
 
         <div className={cl.chats}>
-          <div className={cl.chat}>
-            <div className={cl.chat__left}>
-              <UserIcon />
-            </div>
-            <div className={cl.chat__right}>
-              <div className={cl.chat__cell}>
-                <div className={cl.chat__title}>
-                  <span>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt a itaque aspernatur accusantium recusandae quod officiis laborum facilis adipisci atque doloremque incidunt laudantium soluta, reiciendis, quo provident! Excepturi, libero delectus?</span>
-                </div>
-                <div className={cl.chat__time}>22:22</div>
-              </div>
-              <div className={cl.chat__lastMessage}>
-                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus, architecto. Nihil voluptatem magnam adipisci. Autem quos quod iste error numquam impedit alias voluptate cumque eos quibusdam? Mollitia corporis tempora neque.</span>
-              </div>
-            </div>
-          </div>
+          {chats.map((chat, index) =>
+            <Chat {...chat} key={index} />
+          )}
         </div>
       </div>
     </div>
