@@ -19,7 +19,8 @@
 /* side */
 
 .side {
-  flex: 1;
+  flex: 1 1 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -68,6 +69,11 @@
 
 /* chats */
 
-.chats {
+.sidebar__scroll {
   flex: 1;
+  overflow-y: auto;
+}
+
+.sidebar__chats {
+  height: 100%;
 }

@@ -59,11 +59,14 @@ const Sidebar = () => {
           </button>
         </div>
 
-        <div className={cl.chats}>
-          {chats.map((chat, index) =>
-            <Chat {...chat} key={index} />
-          )}
+        <div className={cl.sidebar__scroll}>
+          <div className={cl.sidebar__chats}>
+            {chats.map((chat, index) =>
+              <Chat {...chat} key={index} />
+            )}
+          </div>
         </div>
+          
       </div>
     </div>
   )

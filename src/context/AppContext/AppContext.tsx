@@ -4,28 +4,27 @@ import { AppContextProps, AppContextProviderProps } from "./types/AppContextType
 export const AppContext = createContext<AppContextProps | null>(null)
 
 const AppContextProvider = ({children}: AppContextProviderProps) => {
-  const [idInstance, setIdInstance] = useState(localStorage.getItem('idInstance'))
-  const [apiTokenInstance, setApiTokenInstance] = useState(localStorage.getItem('apiTokenInstance'))
+  const [data, setData] = useState(localStorage.getItem('data'))
 
   const login = (idInstance: string, apiTokenInstance: string) => {
-    setIdInstance(idInstance)
-    setApiTokenInstance(apiTokenInstance)
-
-    localStorage.setItem('idInstance', idInstance)
-    localStorage.setItem('apiTokenInstance', apiTokenInstance)
+    fetch(`https://api.green-api.com/waInstance${idInstance}/GetSettings/${apiTokenInstance}`)
+    .then(response => response.json())
+    .then((data) => {
+      setData(JSON.stringify(data))
+      localStorage.setItem('data', JSON.stringify(data))
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
   }
 
   const logout = () => {
-    setIdInstance(null)
-    setApiTokenInstance(null)
-
-    localStorage.removeItem('idInstance')
-    localStorage.removeItem('apiTokenInstance')
+    localStorage.removeItem('data')
   }
 
   return (
     <AppContext.Provider value={{
-      idInstance, apiTokenInstance,
+      data,
       login, logout
     }}>
       {children}
