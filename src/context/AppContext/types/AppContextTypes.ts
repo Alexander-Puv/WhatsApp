@@ -1,10 +1,7 @@
 import React from "react";
 
-export type storageItem = string | null
-
 export interface AppContextProps {
-  idInstance: storageItem,
-  apiTokenInstance: storageItem,
+  data: string | null
   login: (idInstance: string, apiTokenInstance: string) => void,
   logout: () => void
 }
