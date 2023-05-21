@@ -12,14 +12,15 @@
   --light-green: #00a884; /* unread msg, login */
   --blue: #53bdeb; 
 
-  --primary-text: rgb(209, 215, 219);
+  --primary-text: #d1d7db;
   --secondary-text: #8696a0; /* sidebar read msg, date, icons */
   --message-text: #e9edef;
   --dark-text: #3b4a54;
   --header-icon-color: #aebac1;
 
-  --chat-underline: #8696a026;
+  --underline-color: #8696a026;
   --scrollbar-thumb: #d1d7db29;
+  --shadow-color: #0b141a66;
 }
 
 ::-webkit-scrollbar {

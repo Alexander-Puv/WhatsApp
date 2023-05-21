@@ -9,7 +9,7 @@ import Chat, { ChatProps } from './Chat/Chat'
 
 const chats: ChatProps[] = [
   {title: 'User', date: new Date(), lastMessage: 'Nothing'},
-  {title: 'User2', date: new Date('2023-5-17'), lastMessage: 'Anything'},
+  {title: 'User2', date: new Date(Date()), lastMessage: 'Anything'},
   {title: 'User3', date: new Date('2023-5-12'), lastMessage: 'Something'},
   {title: 'User', date: new Date(), lastMessage: 'Nothing'},
   {title: 'User2', date: new Date('2023-5-17'), lastMessage: 'Anything'},
@@ -24,6 +24,7 @@ const chats: ChatProps[] = [
   {title: 'User2', date: new Date('2023-5-17'), lastMessage: 'Anything'},
   {title: 'User3', date: new Date('2023-5-12'), lastMessage: 'Something'},
 ]
+
 
 const Sidebar = () => {
   const [searchQuery, setSearchQuery] = useState('')
