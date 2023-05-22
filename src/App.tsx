@@ -10,7 +10,7 @@ function App() {
 
   return (
     <div className='app'>
-      {context?.data ?
+      {context?.username ?
         <div className='chat'>
           <Sidebar />
           <Main />

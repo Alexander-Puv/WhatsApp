@@ -1,7 +1,7 @@
 import React from "react";
 
 export interface AppContextProps {
-  data: string | null
+  username: string | null
   login: (idInstance: string, apiTokenInstance: string) => void,
   logout: () => void
 }
