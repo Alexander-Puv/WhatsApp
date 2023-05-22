@@ -23,7 +23,6 @@
 .login__input input {
   padding: 8px 0 5px;
   font-size: 1.0625rem;
-  color: var(--dark-text);
   border-bottom: 2px solid var(--dark-text);
 }
 .login__input input:focus-within {
