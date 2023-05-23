@@ -8,21 +8,21 @@ import UserIcon from '../UI/UserIcon'
 import Chat, { ChatProps } from './Chat/Chat'
 
 const chats: ChatProps[] = [
-  {title: 'User', date: new Date(), lastMessage: 'Nothing'},
-  {title: 'User2', date: new Date(Date()), lastMessage: 'Anything'},
-  {title: 'User3', date: new Date('2023-5-12'), lastMessage: 'Something'},
-  {title: 'User', date: new Date(), lastMessage: 'Nothing'},
-  {title: 'User2', date: new Date('2023-5-17'), lastMessage: 'Anything'},
-  {title: 'User3', date: new Date('2023-5-12'), lastMessage: 'Something'},
-  {title: 'User', date: new Date(), lastMessage: 'Nothing'},
-  {title: 'User2', date: new Date('2023-5-17'), lastMessage: 'Anything'},
-  {title: 'User3', date: new Date('2023-5-12'), lastMessage: 'Something'},
-  {title: 'User', date: new Date(), lastMessage: 'Nothing'},
-  {title: 'User2', date: new Date('2023-5-17'), lastMessage: 'Anything'},
-  {title: 'User3', date: new Date('2023-5-12'), lastMessage: 'Something'},
-  {title: 'User', date: new Date(), lastMessage: 'Nothing'},
-  {title: 'User2', date: new Date('2023-5-17'), lastMessage: 'Anything'},
-  {title: 'User3', date: new Date('2023-5-12'), lastMessage: 'Something'},
+  {id: '1',title: 'User', date: new Date(), lastMessage: 'Nothing'},
+  {id: '2',title: 'User2', date: new Date(Date()), lastMessage: 'Anything'},
+  {id: '3',title: 'User3', date: new Date('2023-5-12'), lastMessage: 'Something'},
+  {id: '4',title: 'User', date: new Date(), lastMessage: 'Nothing'},
+  {id: '5',title: 'User2', date: new Date('2023-5-17'), lastMessage: 'Anything'},
+  {id: '6',title: 'User3', date: new Date('2023-5-12'), lastMessage: 'Something'},
+  {id: '7',title: 'User', date: new Date(), lastMessage: 'Nothing'},
+  {id: '8',title: 'User2', date: new Date('2023-5-17'), lastMessage: 'Anything'},
+  {id: '9',title: 'User3', date: new Date('2023-5-12'), lastMessage: 'Something'},
+  {id: '10',title: 'User', date: new Date(), lastMessage: 'Nothing'},
+  {id: '11',title: 'User2', date: new Date('2023-5-17'), lastMessage: 'Anything'},
+  {id: '12',title: 'User3', date: new Date('2023-5-12'), lastMessage: 'Something'},
+  {id: '13',title: 'User', date: new Date(), lastMessage: 'Nothing'},
+  {id: '14',title: 'User2', date: new Date('2023-5-17'), lastMessage: 'Anything'},
+  {id: '15',title: 'User3', date: new Date('2023-5-12'), lastMessage: 'Something'},
 ]
 
 

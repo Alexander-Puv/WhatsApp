@@ -1,10 +1,14 @@
+import { useContext } from 'react'
 import cl from './Main.module.css'
+import { ChatContext } from '../../context/ChatContext/ChatContext'
 
 const Main = () => {
-  const isChatChosen = false
+  const context = useContext(ChatContext)
+  if (!context) return <></>
+
   return (
     <main className={cl.main}>
-      {!isChatChosen ?
+      {!context.id ?
         <div className={cl.intro}>
           <div className={cl.intro__content}>
             <div className={cl.intro__svg}>
@@ -22,7 +26,7 @@ const Main = () => {
         <div className={cl.main__chat}>
           <header className={cl.main__header + " header"}></header>
 
-          <div className={cl.main__conv}></div>
+          <div className={cl.main__conv}>{context.id}</div>
 
           <footer className={cl.main__footer}></footer>
         </div>

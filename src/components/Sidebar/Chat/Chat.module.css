@@ -3,6 +3,13 @@
   display: flex;
   cursor: pointer;
 }
+.chat:hover {
+  background-color: var(--incoming-bg);
+}
+
+.chatChosen {
+  background-color: var(--chosen-chat) !important;
+}
 
 /* left */
 

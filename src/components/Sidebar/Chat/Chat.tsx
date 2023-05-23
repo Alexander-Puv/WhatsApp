@@ -1,18 +1,24 @@
+import { useContext } from 'react'
+import { ChatContext } from '../../../context/ChatContext/ChatContext'
 import getMessageTime from '../../../utils/getMessageTime'
 import UserIcon from '../../UI/UserIcon'
 import cl from './Chat.module.css'
 
 export interface ChatProps {
+  id: string,
   title: string,
   date: Date,
   lastMessage: string,
+  // photo: string
 }
 
-const Chat = ({title, date, lastMessage}: ChatProps) => {
+const Chat = ({id, title, date, lastMessage}: ChatProps) => {
+  const context = useContext(ChatContext)
   const time = getMessageTime(date)
   
   return (
-    <div className={cl.chat}>
+    <div onClick={() => context?.setId(id)}
+      className={cl.chat + ' ' + (context?.id === id ? cl.chatChosen : '')}>
       <div className={cl.chat__left}>
         <UserIcon />
       </div>
