@@ -6,9 +6,11 @@ export const AppContext = createContext<AppContextProps | null>(null)
 const AppContextProvider = ({children}: AppContextProviderProps) => {
   const [username, setUsername] = useState(localStorage.getItem('username'))
 
-  // const signup = () => {
+  const signup = (username: string, password: string) => {
+    setUsername(username)
 
-  // }
+    localStorage.setItem('username', username)
+  }
 
   const login = (username: string, password: string) => {
     setUsername(username)
