@@ -1,14 +1,11 @@
-import { useContext } from 'react'
 import cl from './Main.module.css'
-import { ChatContext } from '../../context/ChatContext/ChatContext'
+import { observer } from 'mobx-react-lite'
+import ChatStore from '../../store/ChatStore'
 
 const Main = () => {
-  const context = useContext(ChatContext)
-  if (!context) return <></>
-
   return (
     <main className={cl.main}>
-      {!context.id ?
+      {!ChatStore.id ?
         <div className={cl.intro}>
           <div className={cl.intro__content}>
             <div className={cl.intro__svg}>
@@ -26,7 +23,7 @@ const Main = () => {
         <div className={cl.main__chat}>
           <header className={cl.main__header + " header"}></header>
 
-          <div className={cl.main__conv}>{context.id}</div>
+          <div className={cl.main__conv}>{ChatStore.id}</div>
 
           <footer className={cl.main__footer}></footer>
         </div>
@@ -35,4 +32,4 @@ const Main = () => {
   )
 }
 
-export default Main
+export default observer(Main)

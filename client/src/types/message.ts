@@ -6,4 +6,4 @@ export default interface IMsg {
   message?: string,
 }
 
-export type EventType = 'connectionToChat' | 'connectionToGroup' | 'message'
+export type EventType = 'connection' | 'message'

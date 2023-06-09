@@ -1,23 +1,19 @@
-import { useContext } from 'react'
 import './App.css'
-import { AppContext } from './context/AppContext/AppContext'
 import Sidebar from './components/Sidebar/Sidebar'
 import Main from './components/Main/Main'
 import Login from './components/Login/Login'
-import ChatContextProvider from './context/ChatContext/ChatContext'
+import { observer } from 'mobx-react-lite'
+import AppStore from './store/AppStore'
 
 function App() {
-  const context = useContext(AppContext)
 
   return (
     <div className='app'>
-      {context?.username ?
-        <ChatContextProvider>
-          <div className='chat'>
-            <Sidebar />
-            <Main />
-          </div>
-        </ChatContextProvider>
+      {AppStore.username ?
+        <div className='chat'>
+          <Sidebar />
+          <Main />
+        </div>
       :
         <Login />
       }
@@ -25,4 +21,4 @@ function App() {
   )
 }
 
-export default App
+export default observer(App)

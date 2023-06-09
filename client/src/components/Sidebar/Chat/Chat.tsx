@@ -1,5 +1,5 @@
-import { useContext } from 'react'
-import { ChatContext } from '../../../context/ChatContext/ChatContext'
+import { observer } from 'mobx-react-lite'
+import ChatStore from '../../../store/ChatStore'
 import getMessageTime from '../../../utils/getMessageTime'
 import UserIcon from '../../UI/UserIcon'
 import cl from './Chat.module.css'
@@ -13,12 +13,11 @@ export interface ChatProps {
 }
 
 const Chat = ({id, title, date, lastMessage}: ChatProps) => {
-  const context = useContext(ChatContext)
   const time = getMessageTime(date)
   
   return (
-    <div onClick={() => context?.setId(id)}
-      className={cl.chat + ' ' + (context?.id === id ? cl.chatChosen : '')}>
+    <div onClick={() => ChatStore.setId(id)}
+      className={cl.chat + ' ' + (ChatStore.id === id ? cl.chatChosen : '')}>
       <div className={cl.chat__left}>
         <UserIcon />
       </div>
@@ -37,4 +36,4 @@ const Chat = ({id, title, date, lastMessage}: ChatProps) => {
   )
 }
 
-export default Chat
+export default observer(Chat)
