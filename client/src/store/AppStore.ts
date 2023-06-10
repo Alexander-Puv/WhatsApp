@@ -1,7 +1,7 @@
 import { makeAutoObservable } from "mobx"
 
 class AppStore {
-  username: string | null = null
+  username: string | null = localStorage.getItem('username')
 
   constructor() {
     makeAutoObservable(this)

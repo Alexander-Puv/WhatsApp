@@ -1,5 +1,5 @@
 export default interface IUser {
-  uid: number,
+  uid: string,
   createdAt: Date,
   username: string,
   photoURL: string
