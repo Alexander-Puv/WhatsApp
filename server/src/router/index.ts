@@ -9,7 +9,7 @@ router.post('/auth/logout')
 router.get('/auth/refresh')
 
 // chats
-router.get('/chats/chat/:id') // find a chat/group
+router.get('/chat/:id') // find a chat/group
 
 // user profile
 router.post('/profile/username')

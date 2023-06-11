@@ -8,4 +8,4 @@ export default interface IMsg {
   // isRead: boolean
 }
 
-export type EventType = 'connection' | 'message'
+export type EventType = 'connection-to-group' | 'message' | 'first-message'
