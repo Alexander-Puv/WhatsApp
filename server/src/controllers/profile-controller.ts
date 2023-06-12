@@ -1,15 +1,15 @@
-import ControllerFunction from "../types/controllerFunction"
+import controllerFunc from "../types/controllerFunc"
 
 class ProfileController {
-  username: ControllerFunction = async (req, res, next) => {
+  username: controllerFunc = async (req, res, next) => {
 
   }
 
-  password: ControllerFunction = async (req, res, next) => {
+  password: controllerFunc = async (req, res, next) => {
 
   }
 
-  photo: ControllerFunction = async (req, res, next) => {
+  photo: controllerFunc = async (req, res, next) => {
 
   }
 }

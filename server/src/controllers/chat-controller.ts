@@ -1,7 +1,7 @@
-import ControllerFunction from "../types/controllerFunction"
+import controllerFunc from "../types/controllerFunc"
 
 class ChatController {
-  findChat: ControllerFunction = async (req, res, next) => {
+  findChat: controllerFunc = async (req, res, next) => {
 
   }
 }
