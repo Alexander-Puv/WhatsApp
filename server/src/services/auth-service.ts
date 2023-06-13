@@ -53,7 +53,6 @@ class AuthService {
     }
 
     const userData = tokenService.validateRefreshToken(refreshToken)
-    console.log(userData, ' userData\n'); // DELETE ME!!!
     const token = await tokenService.findToken(refreshToken)
     if (!userData || !token) {
       throw new Error('Unauthorized')
