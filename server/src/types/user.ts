@@ -2,12 +2,14 @@ import { Types } from "mongoose";
 
 export default interface IUser {
   uid: string,
-  createdAt: Date,
   username: string,
-  photoURL: string
+  createdAt: Date,
+  photoURL: string | null
 }
 
 export interface IUserModel {
+  _id: Types.ObjectId,
   username: string,
-  _id: Types.ObjectId
+  createdAt: Date,
+  photoURL: string | null
 }

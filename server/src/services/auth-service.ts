@@ -7,7 +7,7 @@ import { IUserModel } from "../types/user";
 const createTokens = async (user: IUserModel) => {
   const userDto = new UserDto(user)
   const tokens = tokenService.generateTokens({...userDto})
-  await tokenService.saveToken(userDto.id, tokens.refreshToken)
+  await tokenService.saveToken(userDto.uid, tokens.refreshToken)
 
   return {...tokens, user: userDto}
 }
@@ -21,7 +21,7 @@ class AuthService {
     }
 
     const hashPassword = await bcrypt.hash(password, 6)
-    const user = await userModel.create({username, password: hashPassword})
+    const user = await userModel.create({username, password: hashPassword, createdAt: new Date()})
 
     return await createTokens(user)
   }
@@ -53,13 +53,14 @@ class AuthService {
     }
 
     const userData = tokenService.validateRefreshToken(refreshToken)
+    console.log(userData);
     const token = await tokenService.findToken(refreshToken)
     if (!userData || !token) {
       throw new Error('Unauthorized')
       // make error
     }
 
-    const user = await userModel.findById(userData.id)
+    const user = await userModel.findById(userData.uid)
     return await createTokens(user)
   }
 }

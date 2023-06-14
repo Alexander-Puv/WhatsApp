@@ -3,10 +3,14 @@ import { IUserModel } from "../types/user"
 
 export default class UserDto {
   username: string
-  id: Types.ObjectId
+  uid: Types.ObjectId
+  createdAt: Date
+  photoURL: string | undefined
 
   constructor(model: IUserModel) {
     this.username = model.username
-    this.id = model._id
+    this.uid = model._id
+    this.createdAt = model.createdAt
+    this.photoURL = model.photoURL
   }
 }
