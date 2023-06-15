@@ -17,6 +17,7 @@ app.use(cors({
   credentials: true,
   origin: process.env.CLIENT_URL
 }))
+app.use('/uploads/photos', express.static('uploads/photos'));
 app.use('/api', router)
 
 const start = async () => {

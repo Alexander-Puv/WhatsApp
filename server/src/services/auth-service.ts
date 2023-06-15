@@ -1,16 +1,8 @@
-import UserDto from "../dtos/user-dto";
+import bcrypt from 'bcrypt';
 import userModel from "../models/user-model";
-import bcrypt from 'bcrypt'
 import tokenService from "./token-service";
-import { IUserModel } from "../types/user";
-
-const createTokens = async (user: IUserModel) => {
-  const userDto = new UserDto(user)
-  const tokens = tokenService.generateTokens({...userDto})
-  await tokenService.saveToken(userDto.uid, tokens.refreshToken)
-
-  return {...tokens, user: userDto}
-}
+import createTokens from "./utils/createTokens";
+import getUserWithRefresh from './utils/getUserWithRefresh';
 
 class AuthService {
   async register(username: string, password: string) {
@@ -47,20 +39,7 @@ class AuthService {
   }
   
   async refresh(refreshToken: string | undefined) {
-    if (!refreshToken) {
-      throw new Error('Unauthorized')
-      // make error
-    }
-
-    const userData = tokenService.validateRefreshToken(refreshToken)
-    console.log(userData);
-    const token = await tokenService.findToken(refreshToken)
-    if (!userData || !token) {
-      throw new Error('Unauthorized')
-      // make error
-    }
-
-    const user = await userModel.findById(userData.uid)
+    const user = await getUserWithRefresh(refreshToken)
     return await createTokens(user)
   }
 }
