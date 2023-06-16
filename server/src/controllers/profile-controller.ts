@@ -15,7 +15,7 @@ class ProfileController {
 
   photo: controllerFunc = async (req, res, next) => {
     try {
-      const photo = req.file
+      const photo = req.body.imageData
       const {refreshToken} = req.cookies
       const userData = await profileService.photo(refreshToken, photo)
       return res.json(userData)

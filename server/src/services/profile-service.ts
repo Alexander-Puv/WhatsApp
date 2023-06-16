@@ -1,8 +1,5 @@
-import bcrypt from 'bcrypt'
-import { photoDestination } from '../middlewares/photo-middleware'
-import getUserWithRefresh from './utils/getUserWithRefresh'
-import fs from 'fs';
-import path from 'path';
+import bcrypt from 'bcrypt';
+import getUserWithRefresh from './utils/getUserWithRefresh';
 
 class ProfileService {
   async password(refreshToken: string | undefined, prevPassword: string, nextPassword: string) {
@@ -23,22 +20,10 @@ class ProfileService {
     return await user.save();
   }
 
-  async photo(refreshToken: string | undefined, photo: Express.Multer.File) {
+  async photo(refreshToken: string | undefined, photo: string) {
     const user = await getUserWithRefresh(refreshToken)
-    
-    const prevPhoto = user.photoURL
-    if (prevPhoto) {
-      const baseUrl = process.env.API_URL + '/';
-      const filePath = prevPhoto.replace(baseUrl, '');
-      fs.unlink(filePath, (err) => {
-        if (err) {
-          throw err;
-        }
-      });
-    }
 
-    const photoURL = `${process.env.API_URL}/${photoDestination}/${photo.filename}`
-    user.photoURL = photoURL
+    user.photo = photo
     return await user.save()
   }
 }

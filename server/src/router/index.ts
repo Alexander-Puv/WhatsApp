@@ -2,7 +2,6 @@ import express from 'express'
 import authController from '../controllers/auth-controller'
 import chatController from '../controllers/chat-controller'
 import profileController from '../controllers/profile-controller'
-import upload from '../middlewares/photo-middleware'
 
 const router = express.Router()
 
@@ -17,6 +16,6 @@ router.get('/chat/:id', chatController.findChat) // find a chat/group
 
 // user profile
 router.post('/profile/password', profileController.password)
-router.post('/profile/photo', upload.single('photo'), profileController.photo)
+router.post('/profile/photo', profileController.photo)
 
 export default router
