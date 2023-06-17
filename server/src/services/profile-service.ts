@@ -1,18 +1,17 @@
 import bcrypt from 'bcrypt';
 import getUserWithRefresh from './utils/getUserWithRefresh';
+import ApiError from '../error/api-error';
 
 class ProfileService {
   async password(refreshToken: string | undefined, prevPassword: string, nextPassword: string) {
     if (prevPassword === nextPassword) {
-      throw new Error('Passwords are equal')
-      // make error
+      throw ApiError.BadRequest('Passwords are equal')
     }
 
     const user = await getUserWithRefresh(refreshToken)
     const isPassEquals = await bcrypt.compare(prevPassword, user.password)
     if (!isPassEquals) {
-      throw new Error('Password is not correct')
-      // make error
+      throw ApiError.BadRequest('Password is not correct')
     }
 
     const hashPassword = await bcrypt.hash(nextPassword, 6)

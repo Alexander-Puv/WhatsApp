@@ -3,13 +3,13 @@ import userModel from "../models/user-model";
 import tokenService from "./token-service";
 import createTokens from "./utils/createTokens";
 import getUserWithRefresh from './utils/getUserWithRefresh';
+import ApiError from '../error/api-error';
 
 class AuthService {
   async register(username: string, password: string) {
     const candidate = await userModel.findOne({username})
     if (candidate) {
-      throw new Error('This username is already in use')
-      // make error
+      throw ApiError.BadRequest('This username is already in use')
     }
 
     const hashPassword = await bcrypt.hash(password, 6)
@@ -21,14 +21,12 @@ class AuthService {
   async login(username: string, password: string) {
     const user = await userModel.findOne({username})
     if (!user) {
-      throw new Error('This username is not found')
-      // make error
+      throw ApiError.BadRequest('This username is not found')
     }
 
     const isPassEquals = await bcrypt.compare(password, user.password)
     if (!isPassEquals) {
-      throw new Error('Password is not correct')
-      // make error
+      throw ApiError.BadRequest('Password is not correct')
     }
 
     return await createTokens(user)

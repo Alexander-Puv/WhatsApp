@@ -6,6 +6,7 @@ import cors from 'cors'
 import mongoose from 'mongoose'
 import router from './router'
 import dotenv from "dotenv"
+import errorMiddleware from './middlewares/error-middleware'
 
 dotenv.config()
 const PORT = process.env.PORT || 5000
@@ -17,8 +18,8 @@ app.use(cors({
   credentials: true,
   origin: process.env.CLIENT_URL
 }))
-app.use('/uploads/photos', express.static('uploads/photos'));
 app.use('/api', router)
+app.use(errorMiddleware)
 
 const start = async () => {
   try {
