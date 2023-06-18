@@ -1,15 +1,18 @@
-import { Types } from "mongoose";
+import { Document, Types } from "mongoose";
+import IChat, { IChatModel } from "./chat";
 
 export default interface IUser {
   uid: string,
   username: string,
   createdAt: Date,
-  photo: string | null
+  photo: string,
+  chats: IChat[]
 }
 
-export interface IUserModel {
-  _id: Types.ObjectId,
+export interface IUserModel extends Document {
   username: string,
+  password: string,
   createdAt: Date,
-  photo: string | null
+  photo?: string,
+  chats: Types.Array<IChatModel['_id']>,
 }

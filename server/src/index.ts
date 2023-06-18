@@ -23,7 +23,10 @@ app.use(errorMiddleware)
 
 const start = async () => {
   try {
-    await mongoose.connect(process.env.DB_URL)
+    await mongoose.connect(process.env.DB_URL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    } as mongoose.ConnectOptions)
   } catch (e) {
     console.log(e);
   }
@@ -38,15 +41,18 @@ wss.on('connection', (ws) => {
   // send a message
   ws.on('message', (message: string) => {
     const msg: IMsg = JSON.parse(message)
-    if (msg.event === 'first-message') {
-      // make what happens with first message?
-    }
     broadcastMessage(msg)
   })
 
   // create a group
   ws.on('group', (message: string) => {
-    const msg: IMsg = JSON.parse(message)
+    const msg = JSON.parse(message) // type?
+    broadcastMessage(msg)
+  })
+
+  // create a chat
+  ws.on('chat', (message: string) => {
+    const msg = JSON.parse(message) // type?
     broadcastMessage(msg)
   })
 })
