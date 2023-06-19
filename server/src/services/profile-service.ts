@@ -21,7 +21,6 @@ class ProfileService {
 
   async photo(refreshToken: string | undefined, photo: string) {
     const user = await getUserWithRefresh(refreshToken)
-
     user.photo = photo
     return await user.save()
   }
