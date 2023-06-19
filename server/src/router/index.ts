@@ -12,6 +12,8 @@ router.post('/auth/logout', authController.logout)
 router.get('/auth/refresh', authController.refresh)
 
 // chats
+router.post('/chat', chatController.chat)
+router.post('/group', chatController.group)
 router.get('/chat/:id', chatController.findChat) // find a chat/group
 
 // user profile

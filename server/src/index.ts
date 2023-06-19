@@ -1,12 +1,11 @@
-import WS from 'ws'
-import express from 'express'
-import IMsg from './types/message'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
-import mongoose from 'mongoose'
-import router from './router'
 import dotenv from "dotenv"
+import express from 'express'
+import mongoose from 'mongoose'
+import { Server } from 'socket.io'
 import errorMiddleware from './middlewares/error-middleware'
+import router from './router'
 
 dotenv.config()
 const PORT = process.env.PORT || 5000
@@ -33,32 +32,35 @@ const start = async () => {
 }
 start()
 
-const wss = new WS.Server({
-  server: app.listen(PORT, () => console.log(`Server started on port ${PORT}`))
-})
+const server = app.listen(PORT, () => console.log(`Server started on port ${PORT}`))
+export const io = new Server(server)
 
-wss.on('connection', (ws) => {
-  // send a message
-  ws.on('message', (message: string) => {
-    const msg: IMsg = JSON.parse(message)
-    broadcastMessage(msg)
-  })
+// const wss = new WS.Server({
+//   server: app.listen(PORT, () => console.log(`Server started on port ${PORT}`))
+// })
 
-  // create a group
-  ws.on('group', (message: string) => {
-    const msg = JSON.parse(message) // type?
-    broadcastMessage(msg)
-  })
+// wss.on('connection', (ws) => {
+//   // send a message
+//   ws.on('message', (message: string) => {
+//     const msg: IMsg = JSON.parse(message)
+//     broadcastMessage(msg)
+//   })
 
-  // create a chat
-  ws.on('chat', (message: string) => {
-    const msg = JSON.parse(message) // type?
-    broadcastMessage(msg)
-  })
-})
+//   // create a group
+//   ws.on('group', (message: string) => {
+//     const msg = JSON.parse(message) // type?
+//     broadcastMessage(msg)
+//   })
 
-const broadcastMessage = (msg: IMsg) => {
-  wss.clients.forEach(client => {
-    client.send(JSON.stringify(msg))
-  })
-}
+//   // create a chat
+//   ws.on('chat', (message: string) => {
+//     const msg = JSON.parse(message) // type?
+//     broadcastMessage(msg)
+//   })
+// })
+
+// const broadcastMessage = (msg: IMsg) => {
+//   wss.clients.forEach(client => {
+//     client.send(JSON.stringify(msg))
+//   })
+// }
