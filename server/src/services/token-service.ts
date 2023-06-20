@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import AuthDto from '../dtos/user-dto'
+import UserDto from '../dtos/user-dto'
 import { Types } from 'mongoose'
 import tokenModel from '../models/token-model'
 
@@ -8,7 +8,7 @@ interface ValidateReturn extends jwt.JwtPayload {
 }
 
 class TokenService {
-  generateTokens(payload: AuthDto) {
+  generateTokens(payload: UserDto) {
     const accessToken = jwt.sign(payload, process.env.JWT_ACCESS_SECRET, {expiresIn: '30m'})
     const refreshToken = jwt.sign(payload, process.env.JWT_REFRESH_SECRET, {expiresIn: '30d'})
     return {accessToken, refreshToken}

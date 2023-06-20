@@ -15,15 +15,21 @@ class ChatController {
   
   group: controllerFunc = async (req, res, next) => {
     try {
-      
+      const {memberIds, name, photo} = req.body
+      const {refreshToken} = req.cookies
+      const groupData = await chatService.group(refreshToken, memberIds, name, photo)
+      return res.json(groupData)
     } catch (e) {
       next(e)
     }
   }
 
-  findChat: controllerFunc = async (req, res, next) => {
+  photo: controllerFunc = async (req, res, next) => {
     try {
-      
+      const groupId = req.params.id
+      const {photo} = req.body
+      const groupData = await chatService.photo(groupId, photo)
+      return res.json(groupData)
     } catch (e) {
       next(e)
     }
