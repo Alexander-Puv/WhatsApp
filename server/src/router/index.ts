@@ -14,10 +14,13 @@ router.get('/auth/refresh', authController.refresh)
 // chats
 router.post('/chat', chatController.chat)
 router.post('/chat/group', chatController.group)
-router.post('/chat/group/:id/photo', chatController.photo)
+router.put('/chat/group/:id/photo', chatController.photo)
+router.delete('/chat/:id', chatController.deleteChat) // delete for one user
+router.delete('/chat/group/:id', chatController.deleteGroup)
+router.delete('/chat/group/:id/leave', chatController.leaveGroup)
 
 // user profile
-router.post('/profile/password', profileController.password)
-router.post('/profile/photo', profileController.photo)
+router.put('/profile/password', profileController.password)
+router.put('/profile/photo', profileController.photo)
 
 export default router

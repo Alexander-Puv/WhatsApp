@@ -11,14 +11,21 @@ class ChatService {
       throw ApiError.BadRequest('Another group member must be specified')
     }
 
+    const chatExists = await chatModel.findOne({
+      members: { $all: [sender._id, receiverId] },
+      isGroup: false
+    })
+    if (chatExists) {
+      throw ApiError.BadRequest('Chat already exists')
+    }
+
     const chat = await chatModel.create({members: [sender._id, receiverId]})
     io.emit('newChat', chat)
 
-    const receiver = await userModel.findById(receiverId)
-    receiver.chats.push(chat._id)
-    await receiver.save()
-    sender.chats.push(chat._id)
-    await sender.save()
+    await userModel.findByIdAndUpdate(receiverId, {
+      $push: {chats: chat._id}
+    })
+    sender.updateOne({$push: {chats: chat._id}})
 
     return chat
   }
@@ -35,12 +42,11 @@ class ChatService {
     const group = await chatModel.create({members: [sender._id, ...memberIds], isGroup: true, name, photo})
     io.emit('newGroup', group)
 
-    sender.chats.push(group._id)
-    await sender.save()
+    sender.updateOne({$push: {chats: group._id}})
     memberIds.forEach(async (memberId) => {
-      const member = await userModel.findById(memberId)
-      member.chats.push(group._id)
-      await member.save()
+      await userModel.findByIdAndUpdate(memberId, {
+        $push: {chats: group._id}
+      })
     })
 
     return group
@@ -50,6 +56,22 @@ class ChatService {
     const group = await chatModel.findById(groupId)
     group.photo = photo
     return await group.save()
+  }
+
+  async deleteChat(refreshToken: string, chatId: string) {
+    const user = await getUserWithRefresh(refreshToken)
+    await user.updateOne({$pull: {chats: chatId}})
+    return user
+  }
+
+  async deleteGroup(groupId: string) {
+    return await chatModel.findByIdAndUpdate(groupId, {$set: {isDeleted: true}}, {new: true})
+  }
+
+  async leaveGroup(refreshToken: string, groupId: string) {
+    const user = await getUserWithRefresh(refreshToken)
+    await user.updateOne({$pull: {chats: groupId}})
+    return await chatModel.findByIdAndUpdate(groupId, {$pull: {members: user._id}}, {new: true})
   }
 }
 

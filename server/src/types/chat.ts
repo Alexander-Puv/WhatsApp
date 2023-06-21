@@ -16,6 +16,7 @@ type IChat = { // if chat
   messages: IMsg[],
   name: string,
   photo: string,
+  isDeleted: boolean
 }
 export default IChat
 
@@ -28,4 +29,5 @@ export interface IChatModel extends Document {
   isGroup: boolean,
   name?: string,
   photo?: string,
+  isDeleted?: boolean
 }

@@ -34,6 +34,38 @@ class ChatController {
       next(e)
     }
   }
+
+  deleteChat: controllerFunc = async (req, res, next) => {
+    try {
+      const chatId = req.params.id
+      const {refreshToken} = req.cookies
+      const chatData = await chatService.deleteChat(refreshToken, chatId)
+      return res.json(chatData)
+    } catch (e) {
+      next(e)
+    }
+  }
+
+  deleteGroup: controllerFunc = async (req, res, next) => {
+    try {
+      const groupId = req.params.id
+      const groupData = await chatService.deleteGroup(groupId)
+      return res.json(groupData)
+    } catch (e) {
+      next(e)
+    }
+  }
+
+  leaveGroup: controllerFunc = async (req, res, next) => {
+    try {
+      const groupId = req.params.id
+      const {refreshToken} = req.cookies
+      const groupData = await chatService.leaveGroup(refreshToken, groupId)
+      return res.json(groupData)
+    } catch (e) {
+      next(e)
+    }
+  }
 }
 
 export default new ChatController()
