@@ -24,6 +24,17 @@ class ChatController {
     }
   }
 
+  join: controllerFunc = async (req, res, next) => {
+    try {
+      const groupId = req.params.id
+      const {refreshToken} = req.cookies
+      const groupData = await chatService.join(refreshToken, groupId)
+      return res.json(groupData)
+    } catch (e) {
+      next(e)
+    }
+  }
+
   photo: controllerFunc = async (req, res, next) => {
     try {
       const groupId = req.params.id

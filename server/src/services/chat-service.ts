@@ -52,6 +52,16 @@ class ChatService {
     return group
   }
 
+  async join(refreshToken: string, groupId: string) {
+    const user = await getUserWithRefresh(refreshToken)
+    const group = await chatModel.findByIdAndUpdate(groupId, {$push: {members: user._id}}, {new: true})
+
+    await user.updateOne({$push: {chats: group._id}})
+    io.emit('newMember', group)
+    
+    return group
+  }
+
   async photo(groupId: string, photo: string) {
     const group = await chatModel.findById(groupId)
     group.photo = photo
