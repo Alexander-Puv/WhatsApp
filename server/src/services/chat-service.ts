@@ -57,7 +57,7 @@ class ChatService {
     const group = await chatModel.findByIdAndUpdate(groupId, {$push: {members: user._id}}, {new: true})
 
     await user.updateOne({$push: {chats: group._id}})
-    io.emit('newMember', group)
+    io.emit('join', group)
     
     return group
   }
