@@ -1,14 +1,16 @@
 import { validationResult } from "express-validator"
 import authService from "../services/auth-service"
 import ControllerFunc from "../types/controllerFunc"
+import ApiError from "../error/api-error"
 
 class AuthController {
   register: ControllerFunc = async (req, res, next) => {
     try {
       const errors = validationResult(req)
-      if (!errors.isEmpty) {
-        return next(new Error('Validation error'))
-        // make error
+      if (!errors.isEmpty()) {
+        console.log(errors);
+        const errorMessages = errors.array().map((error) => error.msg);
+        return next(ApiError.BadRequest('Validation error', errorMessages))
       }
       
       const {username, password} = req.body
