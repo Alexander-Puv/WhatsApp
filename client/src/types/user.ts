@@ -1,6 +1,9 @@
+import IChat from "./chat";
+
 export default interface IUser {
   uid: string,
   username: string,
   createdAt: Date,
-  photoURL: string | null
+  photo: string,
+  chats: IChat[]
 }

@@ -1,23 +1,34 @@
+import axios, { AxiosError } from "axios"
 import { makeAutoObservable } from "mobx"
+import ApiError from "../types/api/apiError"
+import UserData from "../types/api/userData"
 
 class AppStore {
-  username: string | null = localStorage.getItem('username')
+  accessToken: string | null = localStorage.getItem('accessToken')
 
   constructor() {
     makeAutoObservable(this)
   }
 
-  signup(username: string, password: string) {
-    this.username = username
-    localStorage.setItem('username', username)
+  async register(username: string, password: string) {
+    try {
+      const response = await axios.post<UserData>('http://localhost:5000/api/auth/register', {
+        username,
+        password
+      })
+      localStorage.setItem('accessToken', response.data.accessToken)
+      this.accessToken = response.data.accessToken
+    } catch (e) {
+      throw (e as AxiosError<ApiError>).response?.data
+    }
   }
-  login(username: string, password: string) {
-    this.username = username
-    localStorage.setItem('username', username)
+  async login(username: string, password: string) {
+    // this.username = username
+    // localStorage.setItem('accessToken', )
   }
-  logout() {
-    this.username = null
-    localStorage.removeItem('username')
+  async logout () {
+    // this.username = null
+    // localStorage.removeItem('accessToken')
   }
 }
 

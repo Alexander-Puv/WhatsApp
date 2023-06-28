@@ -9,7 +9,7 @@ function App() {
 
   return (
     <div className='app'>
-      {AppStore.username ?
+      {AppStore.accessToken ?
         <div className='chat'>
           <Sidebar />
           <Main />
