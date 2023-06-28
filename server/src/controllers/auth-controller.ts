@@ -8,7 +8,6 @@ class AuthController {
     try {
       const errors = validationResult(req)
       if (!errors.isEmpty()) {
-        console.log(errors);
         const errorMessages = errors.array().map((error) => error.msg);
         return next(ApiError.BadRequest('Validation error', errorMessages))
       }
