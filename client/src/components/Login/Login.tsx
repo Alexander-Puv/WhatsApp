@@ -5,6 +5,7 @@ import AppStore from '../../store/AppStore'
 import ApiError from '../../types/api/apiError'
 
 const Login = () => {
+  const [isLogin, setIsLogin] = useState(true)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [errorData, setErrorData] = useState<ApiError | null>(null)
@@ -34,11 +35,25 @@ const Login = () => {
           type='password'
         />
       </div>
-      <button
-        className={cl.login__button}
-        onClick={register}>
-        Login
-      </button>
+      {isLogin ? <div className={cl.login_footer}>
+        <button
+          className={cl.login__button}
+          onClick={login}>
+          Log in
+        </button>
+        <a className='link' onClick={() => setIsLogin(prev => !prev)}>
+          Don't have an account yet?
+        </a>
+      </div>:<div className={cl.login_footer}>
+        <button
+          className={cl.login__button}
+          onClick={register}>
+          Sign up
+        </button>
+        <a className='link' onClick={() => setIsLogin(prev => !prev)}>
+          Already have an account?
+        </a>
+      </div>}
     </div>
   )
 }

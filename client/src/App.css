@@ -80,6 +80,16 @@ body {
   fill: var(--header-icon-color) !important;
 }
 
+.link {
+  color: var(--blue);
+  cursor: pointer;
+  opacity: 1;
+  transition: .25s ease;
+}
+.link:hover {
+  opacity: 0.8;
+}
+
 .svg-parent {
   display: flex;
   align-items: center;

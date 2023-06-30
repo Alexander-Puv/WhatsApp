@@ -29,8 +29,15 @@
   border-bottom: 2px solid var(--light-green);
 }
 
+.login_footer {
+  margin: 20px 30px;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .login__button {
-  margin: 20px 30px 20px auto;
   padding: 10px 50px;
   background-color: var(--light-green);
   font-size: 1.125rem;

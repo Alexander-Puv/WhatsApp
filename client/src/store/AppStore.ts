@@ -1,34 +1,73 @@
-import axios, { AxiosError } from "axios"
+import axios, { AxiosError, AxiosResponse } from "axios"
 import { makeAutoObservable } from "mobx"
 import ApiError from "../types/api/apiError"
 import UserData from "../types/api/userData"
+import IUser from "../types/user"
+import $api, { API_URL } from "../http"
 
 class AppStore {
-  accessToken: string | null = localStorage.getItem('accessToken')
+  isAuth = false
+  isLoading = true
+  user = {} as IUser
 
   constructor() {
     makeAutoObservable(this)
   }
 
+  setIsAuth(bool: boolean) {
+    this.isAuth = bool
+  }
+  setIsLoading(bool: boolean) {
+    this.isLoading = bool
+  }
+  setUser(user: IUser) {
+    this.user = user
+  }
+
   async register(username: string, password: string) {
     try {
-      const response = await axios.post<UserData>('http://localhost:5000/api/auth/register', {
-        username,
-        password
-      })
-      localStorage.setItem('accessToken', response.data.accessToken)
-      this.accessToken = response.data.accessToken
+      const response: AxiosResponse<UserData> = await $api.post(`/auth/register`, {username, password})
+      localStorage.setItem('token', response.data.accessToken)
+      this.setIsAuth(true)
+      this.setUser(response.data.user)
     } catch (e) {
       throw (e as AxiosError<ApiError>).response?.data
     }
   }
   async login(username: string, password: string) {
-    // this.username = username
-    // localStorage.setItem('accessToken', )
+    try {
+      const response: AxiosResponse<UserData> = await $api.post(`/auth/login`, {username, password})
+      localStorage.setItem('token', response.data.accessToken)
+      this.setIsAuth(true)
+      this.setUser(response.data.user)
+    } catch (e) {
+      throw (e as AxiosError<ApiError>).response?.data
+    }
   }
   async logout () {
-    // this.username = null
-    // localStorage.removeItem('accessToken')
+    try {
+      const response: AxiosResponse<UserData> = await $api.post(`/auth/logout`)
+      localStorage.removeItem('token')
+      this.setIsAuth(false)
+      this.setUser(response.data.user)
+    } catch (e) {
+      throw (e as AxiosError<ApiError>).response?.data
+    }
+  }
+
+  async checkAuth() {
+    this.setIsLoading(true)
+    try {
+      const response = await axios.get<UserData>(`${API_URL}/auth/refresh`, {withCredentials: true})
+      console.log(response);
+      localStorage.setItem('token', response.data.accessToken)
+      this.setIsAuth(true)
+      this.setUser(response.data.user)
+    } catch (e) {
+      throw (e as AxiosError<ApiError>).response?.data
+    } finally {
+      this.setIsLoading(false)
+    }
   }
 }
 
