@@ -59,7 +59,6 @@ class AppStore {
     this.setIsLoading(true)
     try {
       const response = await axios.get<UserData>(`${API_URL}/auth/refresh`, {withCredentials: true})
-      console.log(response);
       localStorage.setItem('token', response.data.accessToken)
       this.setIsAuth(true)
       this.setUser(response.data.user)
