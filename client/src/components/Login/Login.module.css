@@ -1,6 +1,7 @@
 .login {
   width: 1000px;
   margin: 0 36px;
+  padding: 0 30px;
   display: flex;
   flex-direction: column;
   background-color: var(--incoming-bg);
@@ -10,7 +11,7 @@
 
 .login__input {
   margin-bottom: 10px;
-  padding: 24px 30px 10px;
+  padding: 24px 0 10px;
   display: flex;
   flex-direction: column;
 }
@@ -29,8 +30,22 @@
   border-bottom: 2px solid var(--light-green);
 }
 
+.login__error {
+  margin: 15px 0;
+  display: flex;
+  flex-direction: column;
+  color: var(--red);
+}
+.login__error>div {
+  margin-top: 10px;
+  padding-left: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
 .login_footer {
-  margin: 20px 30px;
+  margin: 20px 0;
   display: flex;
   flex-direction: row-reverse;
   align-items: center;

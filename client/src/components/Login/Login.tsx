@@ -35,6 +35,20 @@ const Login = () => {
           type='password'
         />
       </div>
+
+      {errorData &&
+        <div className={cl.login__error}>
+          <span>{errorData.message}:</span>
+          {errorData.errors &&
+            <div>
+              {errorData.errors.map(err =>
+                <span key={err}>{err}</span>
+              )}
+            </div>
+          }
+        </div>
+      }
+
       {isLogin ? <div className={cl.login_footer}>
         <button
           className={cl.login__button}

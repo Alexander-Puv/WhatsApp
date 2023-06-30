@@ -10,6 +10,8 @@ function App() {
   useEffect(() => {
     if (localStorage.getItem('token')) {
       AppStore.checkAuth()
+    } else {
+      AppStore.setIsLoading(false)
     }
   }, [])
 

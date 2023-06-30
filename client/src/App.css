@@ -10,7 +10,8 @@
   --chosen-chat: #2a3942; /* chosen chat, send message input,  */
   --dark-green: #005c4b; /* outgoing msg */
   --light-green: #00a884; /* unread msg, login */
-  --blue: #53bdeb; 
+  --blue: #53bdeb;
+  --red: #ca1515;
 
   --primary-text: #d1d7db;
   --secondary-text: #8696a0; /* sidebar read msg, date, icons */
