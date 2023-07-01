@@ -18,7 +18,7 @@ function App() {
 
   return (
     <div className='app'>
-      {AppStore.isLoading ?
+      {!AppStore.isLoading ?
         AppStore.isAuth ?
           <div className='chat'>
             <Sidebar />
