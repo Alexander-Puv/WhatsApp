@@ -5,6 +5,7 @@ import Login from './components/Login/Login'
 import { observer } from 'mobx-react-lite'
 import AppStore from './store/AppStore'
 import { useEffect } from 'react'
+import Loader from './components/Loader/Loader'
 
 function App() {
   useEffect(() => {
@@ -17,7 +18,7 @@ function App() {
 
   return (
     <div className='app'>
-      {!AppStore.isLoading ?
+      {AppStore.isLoading ?
         AppStore.isAuth ?
           <div className='chat'>
             <Sidebar />
@@ -26,7 +27,7 @@ function App() {
         :
           <Login />
       :
-        "Loading"
+        <Loader />
       }
     </div>
   )
