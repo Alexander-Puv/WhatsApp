@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
-import getUserWithRefresh from './utils/getUserWithRefresh';
 import ApiError from '../error/api-error';
+import userService from './user-service';
 
 class ProfileService {
   async password(refreshToken: string | undefined, prevPassword: string, nextPassword: string) {
@@ -8,7 +8,7 @@ class ProfileService {
       throw ApiError.BadRequest('Passwords are equal')
     }
 
-    const user = await getUserWithRefresh(refreshToken)
+    const user = await userService.getUserWithRefresh(refreshToken)
     const isPassEquals = await bcrypt.compare(prevPassword, user.password)
     if (!isPassEquals) {
       throw ApiError.BadRequest('Password is not correct')
@@ -20,7 +20,7 @@ class ProfileService {
   }
 
   async photo(refreshToken: string | undefined, photo: string) {
-    const user = await getUserWithRefresh(refreshToken)
+    const user = await userService.getUserWithRefresh(refreshToken)
     user.photo = photo
     return await user.save()
   }

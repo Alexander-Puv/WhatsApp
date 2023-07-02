@@ -1,9 +1,9 @@
 import bcrypt from 'bcrypt';
+import ApiError from '../error/api-error';
 import userModel from "../models/user-model";
 import tokenService from "./token-service";
+import userService from './user-service';
 import createTokens from "./utils/createTokens";
-import getUserWithRefresh from './utils/getUserWithRefresh';
-import ApiError from '../error/api-error';
 
 class AuthService {
   async register(username: string, password: string) {
@@ -37,7 +37,7 @@ class AuthService {
   }
   
   async refresh(refreshToken: string | undefined) {
-    const user = await getUserWithRefresh(refreshToken)
+    const user = await userService.getUserWithRefresh(refreshToken)
     return await createTokens(user)
   }
 }

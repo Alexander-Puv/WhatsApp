@@ -3,6 +3,7 @@ import authController from '../controllers/auth-controller'
 import chatController from '../controllers/chat-controller'
 import profileController from '../controllers/profile-controller'
 import validator from './validator'
+import userController from '../controllers/user-controller'
 
 const router = express.Router()
 
@@ -22,6 +23,9 @@ router.put('/chat/group/:id/photo', chatController.photo)
 router.delete('/chat/:id', chatController.deleteChat) // delete for one user
 router.delete('/chat/group/:id', chatController.deleteGroup)
 router.delete('/chat/group/:id/leave', chatController.leaveGroup)
+
+// users
+router.get('/user/:id', userController.findUserById)
 
 // user profile
 router.put('/profile/password', profileController.password)

@@ -34,7 +34,7 @@ const start = async () => {
 start()
 
 const server = app.listen(PORT, () => console.log(`Server started on port ${PORT}`))
-export const io = new Server(server)
+export const io = new Server(server, {cors: {origin: process.env.CLIENT_URL}})
 ioConnection(io)
 
 // const wss = new WS.Server({

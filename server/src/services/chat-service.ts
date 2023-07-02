@@ -2,11 +2,11 @@ import { io } from ".."
 import ApiError from "../error/api-error"
 import chatModel from "../models/chat-model"
 import userModel from "../models/user-model"
-import getUserWithRefresh from "./utils/getUserWithRefresh"
+import userService from "./user-service"
 
 class ChatService {
   async chat(refreshToken: string, receiverId: string) {
-    const sender = await getUserWithRefresh(refreshToken)
+    const sender = await userService.getUserWithRefresh(refreshToken)
     if (!receiverId) {
       throw ApiError.BadRequest('Another group member must be specified')
     }
@@ -31,7 +31,7 @@ class ChatService {
   }
 
   async group(refreshToken: string, memberIds: string[], name: string, photo: string | undefined) {
-    const sender = await getUserWithRefresh(refreshToken)
+    const sender = await userService.getUserWithRefresh(refreshToken)
     if (!name) {
       throw ApiError.BadRequest('Group name is not specified')
     }
@@ -53,7 +53,7 @@ class ChatService {
   }
 
   async join(refreshToken: string, groupId: string) {
-    const user = await getUserWithRefresh(refreshToken)
+    const user = await userService.getUserWithRefresh(refreshToken)
     const group = await chatModel.findByIdAndUpdate(groupId, {$push: {members: user._id}}, {new: true})
 
     await user.updateOne({$push: {chats: group._id}})
@@ -69,7 +69,7 @@ class ChatService {
   }
 
   async deleteChat(refreshToken: string, chatId: string) {
-    const user = await getUserWithRefresh(refreshToken)
+    const user = await userService.getUserWithRefresh(refreshToken)
     await user.updateOne({$pull: {chats: chatId}})
     return user
   }
@@ -79,7 +79,7 @@ class ChatService {
   }
 
   async leaveGroup(refreshToken: string, groupId: string) {
-    const user = await getUserWithRefresh(refreshToken)
+    const user = await userService.getUserWithRefresh(refreshToken)
     await user.updateOne({$pull: {chats: groupId}})
     return await chatModel.findByIdAndUpdate(groupId, {$pull: {members: user._id}}, {new: true})
   }
