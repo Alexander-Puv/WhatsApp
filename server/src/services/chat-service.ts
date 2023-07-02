@@ -52,6 +52,10 @@ class ChatService {
     return group
   }
 
+  async findChat(id: string) {
+    return await chatModel.findById(id)
+  }
+
   async join(refreshToken: string, groupId: string) {
     const user = await userService.getUserWithRefresh(refreshToken)
     const group = await chatModel.findByIdAndUpdate(groupId, {$push: {members: user._id}}, {new: true})

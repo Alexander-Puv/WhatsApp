@@ -2,8 +2,8 @@ import express from 'express'
 import authController from '../controllers/auth-controller'
 import chatController from '../controllers/chat-controller'
 import profileController from '../controllers/profile-controller'
-import validator from './validator'
 import userController from '../controllers/user-controller'
+import validator from './validator'
 
 const router = express.Router()
 
@@ -17,6 +17,8 @@ router.get('/auth/refresh', authController.refresh)
 router.post('/chat', chatController.chat)
 router.post('/chat/group', chatController.group)
 
+router.get('/chat/:id', chatController.findChat)
+
 router.put('/chat/group/:id', chatController.join)
 router.put('/chat/group/:id/photo', chatController.photo)
 
@@ -25,7 +27,7 @@ router.delete('/chat/group/:id', chatController.deleteGroup)
 router.delete('/chat/group/:id/leave', chatController.leaveGroup)
 
 // users
-router.get('/user/:id', userController.findUserById)
+router.get('/user/:id', userController.findUser)
 
 // user profile
 router.put('/profile/password', profileController.password)

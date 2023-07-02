@@ -24,6 +24,16 @@ class ChatController {
     }
   }
 
+  findChat: controllerFunc = async (req, res, next) => {
+    try {
+      const {id} = req.params
+      const chatData = await chatService.findChat(id)
+      return res.json(chatData)
+    } catch (e) {
+      next(e)
+    }
+  }
+
   join: controllerFunc = async (req, res, next) => {
     try {
       const groupId = req.params.id

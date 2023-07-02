@@ -1,10 +1,10 @@
-import UserDto from "../dtos/user-dto"
-import ApiError from "../error/api-error"
-import userModel from "../models/user-model"
-import tokenService from "./token-service"
+import UserDto from '../dtos/user-dto';
+import ApiError from '../error/api-error';
+import userModel from "../models/user-model";
+import tokenService from "./token-service";
 
 class UserService {
-  async findUserById(id: string) {
+  async findUser(id: string) {
     const user = await userModel.findById(id)
     return new UserDto(user)
   }
