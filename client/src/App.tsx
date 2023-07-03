@@ -6,14 +6,31 @@ import { observer } from 'mobx-react-lite'
 import AppStore from './store/AppStore'
 import { useEffect } from 'react'
 import Loader from './components/Loader/Loader'
+import {connect} from 'socket.io-client';
+import ChatStore from './store/ChatStore'
+import { ROOT_URL } from './http'
 
 function App() {
   useEffect(() => {
+    const socket = connect(ROOT_URL);
+
+    socket.on('connect', () => {
+      console.log('Connected to sockets server');
+    });
+
+    socket.on('newChat', chat => {
+      ChatStore.setChats([...ChatStore.chats, chat])
+    })
+
     if (localStorage.getItem('token')) {
       AppStore.checkAuth()
     } else {
       AppStore.setIsLoading(false)
     }
+    
+    return () => {
+      socket.disconnect()
+    };
   }, [])
 
   return (

@@ -1,17 +1,16 @@
 import IMsg from "./message";
-import IUser from "./user";
 
 type IChat = { // if chat
   isGroup: false,
   id: string,
   createdAt: Date,
-  users: IUser[],
+  members: string[],
   messages: IMsg[],
 } | { // if group
   isGroup: true,
   id: string,
   createdAt: Date,
-  users: IUser[],
+  members: string[],
   messages: IMsg[],
   name: string,
   photo: string,

@@ -1,9 +1,10 @@
 import axios, { AxiosError, AxiosResponse } from "axios"
 import { makeAutoObservable } from "mobx"
+import $api, { API_URL } from "../http"
 import ApiError from "../types/api/apiError"
 import UserData from "../types/api/userData"
 import IUser from "../types/user"
-import $api, { API_URL } from "../http"
+import ChatStore from "./ChatStore"
 
 class AppStore {
   isAuth = false
@@ -62,6 +63,7 @@ class AppStore {
       localStorage.setItem('token', response.data.accessToken)
       this.setIsAuth(true)
       this.setUser(response.data.user)
+      ChatStore.setChats(response.data.user.chats)
     } catch (e) {
       throw (e as AxiosError<ApiError>).response?.data
     } finally {

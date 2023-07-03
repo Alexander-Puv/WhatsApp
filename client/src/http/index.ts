@@ -1,7 +1,8 @@
 import axios from "axios"
 import UserData from "../types/api/userData"
 
-export const API_URL = 'http://localhost:5000/api'
+export const ROOT_URL = 'http://localhost:5000'
+export const API_URL = ROOT_URL + '/api'
 
 const $api = axios.create({
   withCredentials: true,

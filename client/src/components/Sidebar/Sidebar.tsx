@@ -3,31 +3,11 @@ import { AiOutlineSearch } from 'react-icons/ai'
 import { BiFilter } from 'react-icons/bi'
 import { GoKebabVertical } from 'react-icons/go'
 import { VscClose } from 'react-icons/vsc'
-import cl from './Sideabr.module.css'
+import ChatStore from '../../store/ChatStore'
 import UserIcon from '../UI/UserIcon'
-import Chat, { ChatProps } from './Chat/Chat'
-
-const yesterday = Date.now() - 24 * 60 * 60 * 1000
-const fourDaysBefore = Date.now() - 4 * 24 * 60 * 60 * 1000
-
-const chats: ChatProps[] = [
-  {id: '1', title: 'User', date: new Date(), lastMessage: 'Nothing'},
-  {id: '2', title: 'User2', date: new Date(yesterday), lastMessage: 'Anything'},
-  {id: '3', title: 'User3', date: new Date(fourDaysBefore), lastMessage: 'Something'},
-  {id: '4', title: 'User', date: new Date(), lastMessage: 'Nothing'},
-  {id: '5', title: 'User2', date: new Date(yesterday), lastMessage: 'Anything'},
-  {id: '6', title: 'User3', date: new Date(fourDaysBefore), lastMessage: 'Something'},
-  {id: '7', title: 'User', date: new Date(), lastMessage: 'Nothing'},
-  {id: '8', title: 'User2', date: new Date(yesterday), lastMessage: 'Anything'},
-  {id: '9', title: 'User3', date: new Date(fourDaysBefore), lastMessage: 'Something'},
-  {id: '10', title: 'User', date: new Date(), lastMessage: 'Nothing'},
-  {id: '11', title: 'User2', date: new Date(yesterday), lastMessage: 'Anything'},
-  {id: '12', title: 'User3', date: new Date(fourDaysBefore), lastMessage: 'Something'},
-  {id: '13', title: 'User', date: new Date(), lastMessage: 'Nothing'},
-  {id: '14', title: 'User2', date: new Date(yesterday), lastMessage: 'Anything'},
-  {id: '15', title: 'User3', date: new Date(fourDaysBefore), lastMessage: 'Something'},
-]
-
+import Chat from './Chat/Chat'
+import cl from './Sideabr.module.css'
+import { toJS } from 'mobx'
 
 const Sidebar = () => {
   const [searchQuery, setSearchQuery] = useState('')
@@ -65,8 +45,8 @@ const Sidebar = () => {
 
         <div className={cl.sidebar__scroll}>
           <div className={cl.sidebar__chats}>
-            {chats.map((chat, index) =>
-              <Chat {...chat} key={index} />
+            {toJS(ChatStore.chats).map(chatId =>
+              <Chat chatId={chatId} key={chatId} />
             )}
           </div>
         </div>
