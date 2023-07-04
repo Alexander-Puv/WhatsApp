@@ -52,8 +52,12 @@ class ChatService {
     return group
   }
 
-  async findChat(id: string) {
+  async findChatById(id: string) {
     return await chatModel.findById(id)
+  }
+
+  async findGroupByName(name: string) {
+    return await chatModel.findOne({name})
   }
 
   async join(refreshToken: string, groupId: string) {

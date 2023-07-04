@@ -17,7 +17,8 @@ router.get('/auth/refresh', authController.refresh)
 router.post('/chat', chatController.chat)
 router.post('/chat/group', chatController.group)
 
-router.get('/chat/:id', chatController.findChat)
+router.get('/chat/:id', chatController.findChatById)
+router.get('/chat/group', chatController.findGroupByName)
 
 router.put('/chat/group/:id', chatController.join)
 router.put('/chat/group/:id/photo', chatController.photo)
@@ -27,7 +28,8 @@ router.delete('/chat/group/:id', chatController.deleteGroup)
 router.delete('/chat/group/:id/leave', chatController.leaveGroup)
 
 // users
-router.get('/user/:id', userController.findUser)
+router.get('/user', userController.findUserByUsername)
+router.get('/user/:id', userController.findUserById)
 
 // user profile
 router.put('/profile/password', profileController.password)

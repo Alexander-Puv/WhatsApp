@@ -4,9 +4,12 @@ import userModel from "../models/user-model";
 import tokenService from "./token-service";
 
 class UserService {
-  async findUser(id: string) {
-    const user = await userModel.findById(id)
-    return new UserDto(user)
+  async findUserById(id: string) {
+    return new UserDto(await userModel.findById(id))
+  }
+
+  async findUserByUsername(username: string) {
+    return new UserDto(await userModel.findOne({username}))
   }
 
   async getUserWithRefresh (refreshToken: string | undefined) {
