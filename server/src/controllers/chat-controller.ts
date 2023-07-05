@@ -37,7 +37,10 @@ class ChatController {
   findGroupByName: controllerFunc = async (req, res, next) => {
     try {
       const {name} = req.params
-      const groupData = await chatService.findGroupByName(name)
+      const {page, pageSize} = req.query
+      const parsedPage = isNaN(Number(page)) ? 1 : Number(page);
+      const parsedPageSize = isNaN(Number(pageSize)) ? 3 : Number(pageSize);
+      const groupData = await chatService.findGroupByName(name, parsedPage, parsedPageSize)
       return res.json(groupData)
     } catch (e) {
       next(e)

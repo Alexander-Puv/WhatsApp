@@ -56,8 +56,11 @@ class ChatService {
     return await chatModel.findById(id)
   }
 
-  async findGroupByName(name: string) {
-    return await chatModel.findOne({name})
+  async findGroupByName(name: string, page: number, pageSize: number) {
+    return await chatModel.find({name})
+      .skip((page - 1) * pageSize)
+      .limit(pageSize)
+      .exec()
   }
 
   async join(refreshToken: string, groupId: string) {

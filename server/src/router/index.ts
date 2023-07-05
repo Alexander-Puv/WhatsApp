@@ -18,7 +18,7 @@ router.post('/chat', chatController.chat)
 router.post('/chat/group', chatController.group)
 
 router.get('/chat/:id', chatController.findChatById)
-router.get('/chat/group', chatController.findGroupByName)
+router.get('/chat/group/find', chatController.findGroupByName)
 
 router.put('/chat/group/:id', chatController.join)
 router.put('/chat/group/:id/photo', chatController.photo)
