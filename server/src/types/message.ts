@@ -10,7 +10,7 @@ export default interface IMsg {
 // export type EventType = 'connection-to-group' | 'message' | 'first-message'
 
 export interface IMsgModel extends Document {
-  content: string;
-  senderId: Types.ObjectId;
-  createdAt: Date;
+  content: string,
+  senderId: Types.ObjectId,
+  createdAt: Date
 }

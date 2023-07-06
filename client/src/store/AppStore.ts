@@ -41,6 +41,7 @@ class AppStore {
       localStorage.setItem('token', response.data.accessToken)
       this.setIsAuth(true)
       this.setUser(response.data.user)
+      ChatStore.setChats(response.data.user.chats)
     } catch (e) {
       throw (e as AxiosError<ApiError>).response?.data
     }

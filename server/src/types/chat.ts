@@ -22,7 +22,7 @@ export default IChat
 
 
 export interface IChatModel extends Document {
-  members: [Types.Array<IUserModel['_id']>],
+  members: Types.Array<IUserModel['_id']>,
   createdAt: Date,
   messages: IMsgModel[],
   // if group

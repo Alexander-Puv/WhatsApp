@@ -5,7 +5,7 @@ class UserController {
   findUserById: ControllerFunc = async (req, res, next) => {
     try {
       const {id} = req.params
-      const userData = await userService.findUserById(id)
+      const userData = await userService.findUserById(id as string)
       return res.json(userData)
     } catch (e) {
       next(e)
@@ -14,8 +14,8 @@ class UserController {
 
   findUserByUsername: ControllerFunc = async (req, res, next) => {
     try {
-      const {username} = req.body
-      const userData = await userService.findUserByUsername(username)
+      const {username} = req.query
+      const userData = await userService.findUserByUsername(username as string)
       return res.json(userData)
     } catch (e) {
       next(e)

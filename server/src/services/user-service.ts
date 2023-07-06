@@ -9,7 +9,8 @@ class UserService {
   }
 
   async findUserByUsername(username: string) {
-    return new UserDto(await userModel.findOne({username}))
+    const user = await userModel.findOne({username})
+    return user ? new UserDto(user) : undefined
   }
 
   async getUserWithRefresh (refreshToken: string | undefined) {

@@ -9,30 +9,31 @@ import UserIcon from '../../UI/UserIcon'
 import cl from './Chat.module.css'
 import IUser from '../../../types/user'
 
-export interface ChatProps {
-  chatId: string
+interface ChatProps {
+  chatId: string,
+  group?: IChat
 }
 
-const Chat = ({chatId}: ChatProps) => {
-  const [chat, setChat] = useState<IChat | null>(null)
+const Chat = ({chatId, group}: ChatProps) => {
+  const [chat, setChat] = useState<IChat | null>(group ? group : null)
   const [member, setMember] = useState<IUser | null>(null)
   
   const appStoreUser = toJS(AppStore.user)
 
   useEffect(() => {
     const findChat = async () => {
-      const chat = await ChatStore.findChat(chatId)
+      const chat = await ChatStore.findChatById(chatId)
       setChat(chat)
-      setMember(await ChatStore.findUser(
+      setMember(await ChatStore.findUserById(
         chat.members[0] !== appStoreUser.uid
         ? chat.members[0]
         : chat.members[1]
       ))
     }
-    findChat()
+    !group && findChat()
   }, [])
 
-  if (!chat || !member) return <></>
+  if (!chat) return <></>
 
   const time = getMessageTime(new Date(chat.createdAt))
   const photo = chat.isGroup ? chat.photo : member?.photo

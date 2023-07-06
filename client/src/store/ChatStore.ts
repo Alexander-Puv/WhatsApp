@@ -1,4 +1,4 @@
-import { AxiosResponse } from "axios"
+import axios, { AxiosResponse } from "axios"
 import { makeAutoObservable } from "mobx"
 import $api, { API_URL } from "../http"
 import IChat from "../types/chat"
@@ -19,14 +19,24 @@ class ChatStore {
     this.chats = chats
   }
 
-  async findChat(chatId: string) {
+  async findChatById(chatId: string) {
     const response: AxiosResponse<IChat> = await $api.get(`${API_URL}/chat/${chatId}`)
     return response.data
   }
 
-  async findUser(uid: string) {
+  async findUserById(uid: string) {
     const response: AxiosResponse<IUser> = await $api.get(`${API_URL}/user/${uid}`)
     return response.data
+  }
+
+  async findChat(name: string): Promise<[IUser | undefined, IChat[] | undefined]> {
+    const user: AxiosResponse<IUser> = await $api.get(`${API_URL}/user/?username=${name}`)
+    const group: AxiosResponse<IChat[]> = await $api.get(`${API_URL}/chat/group/find/?name=${name}`)
+
+    const userData = user.data? user.data : undefined
+    const groupData = group.data.length ? group.data : undefined
+
+    return [userData, groupData]
   }
 }
 

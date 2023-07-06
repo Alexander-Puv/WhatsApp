@@ -1,4 +1,5 @@
 import { io } from ".."
+import ChatDto from "../dtos/chat-dto"
 import ApiError from "../error/api-error"
 import chatModel from "../models/chat-model"
 import userModel from "../models/user-model"
@@ -27,7 +28,7 @@ class ChatService {
     })
     sender.updateOne({$push: {chats: chat._id}})
 
-    return chat
+    return new ChatDto(chat)
   }
 
   async group(refreshToken: string, memberIds: string[], name: string, photo: string | undefined) {
@@ -49,18 +50,19 @@ class ChatService {
       })
     })
 
-    return group
+    return new ChatDto(group)
   }
 
   async findChatById(id: string) {
-    return await chatModel.findById(id)
+    return new ChatDto(await chatModel.findById(id))
   }
 
   async findGroupByName(name: string, page: number, pageSize: number) {
-    return await chatModel.find({name})
-      .skip((page - 1) * pageSize)
-      .limit(pageSize)
-      .exec()
+    const groups = await chatModel.find({name})
+    .skip((page - 1) * pageSize)
+    .limit(pageSize)
+    .exec()
+    return groups.map(group => new ChatDto(group))
   }
 
   async join(refreshToken: string, groupId: string) {
@@ -70,13 +72,13 @@ class ChatService {
     await user.updateOne({$push: {chats: group._id}})
     io.emit('join', group)
     
-    return group
+    return new ChatDto(group)
   }
 
   async photo(groupId: string, photo: string) {
     const group = await chatModel.findById(groupId)
     group.photo = photo
-    return await group.save()
+    return new ChatDto(await group.save())
   }
 
   async deleteChat(refreshToken: string, chatId: string) {
@@ -86,13 +88,13 @@ class ChatService {
   }
 
   async deleteGroup(groupId: string) {
-    return await chatModel.findByIdAndUpdate(groupId, {$set: {isDeleted: true}}, {new: true})
+    return new ChatDto(await chatModel.findByIdAndUpdate(groupId, {$set: {isDeleted: true}}, {new: true}))
   }
 
   async leaveGroup(refreshToken: string, groupId: string) {
     const user = await userService.getUserWithRefresh(refreshToken)
     await user.updateOne({$pull: {chats: groupId}})
-    return await chatModel.findByIdAndUpdate(groupId, {$pull: {members: user._id}}, {new: true})
+    return new ChatDto(await chatModel.findByIdAndUpdate(groupId, {$pull: {members: user._id}}, {new: true}))
   }
 }
 
