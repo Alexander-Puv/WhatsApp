@@ -1,20 +1,20 @@
+import { toJS } from 'mobx'
 import { useEffect, useState } from 'react'
 import { AiOutlineSearch } from 'react-icons/ai'
 import { BiFilter } from 'react-icons/bi'
 import { GoKebabVertical } from 'react-icons/go'
 import { VscClose } from 'react-icons/vsc'
 import ChatStore from '../../store/ChatStore'
+import IChat from '../../types/chat'
+import IUser from '../../types/user'
 import UserIcon from '../UI/UserIcon'
 import Chat from './Chat/Chat'
 import cl from './Sideabr.module.css'
-import { toJS } from 'mobx'
-import IUser from '../../types/user'
-import IChat from '../../types/chat'
 
 const Sidebar = () => {
   const [searchQuery, setSearchQuery] = useState('')
   const [searchChats, setSearchChats] = useState<[IUser | undefined, IChat[] | undefined] | null>(null)
-
+  
   useEffect(() => {
     const delayDebounceFn = setTimeout(async () => {
       searchQuery && setSearchChats(await ChatStore.findChat(searchQuery))
@@ -45,7 +45,7 @@ const Sidebar = () => {
               value={searchQuery} onChange={e => setSearchQuery(e.target.value)}/>
             {searchQuery &&
               <button className={cl.search__closeButton + ' svg-parent'}
-                onClick={() => setSearchQuery('')}>
+                onClick={() => {setSearchQuery(''); setSearchChats(null)}}>
                 <VscClose />
               </button>
             }
@@ -56,21 +56,19 @@ const Sidebar = () => {
         </div>
 
         <div className={cl.sidebar__scroll}>
-          <div className={cl.sidebar__chats}>
-            {!searchChats ?
-              toJS(ChatStore.chats).map(chatId =>
-                <Chat chatId={chatId} key={chatId} />
-              )
-            : <>
-              {/* {searchChats[0]} */}
-              {searchChats[1]?.map((group) =>{
-                console.log(group);
-                
-                return <Chat chatId={group.id} group={group} key={group.id} />
-              })}
-            </>
-            }
+          <div className={`${cl.sidebar__chats} ${searchChats && cl.hidden}`}>
+            {toJS(ChatStore.chats).map(chatId =>
+              <Chat chatId={chatId} key={chatId} />
+            )}
           </div>
+          {searchChats && <div className={cl.sidebar__chats}>
+            {/* {searchChats[0] &&
+              <Chat />
+            } */}
+            {searchChats[1]?.map((group) =>
+              <Chat chatId={group.id} group={group} key={group.id} />
+            )}
+          </div>}
         </div>
           
       </div>

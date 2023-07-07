@@ -86,3 +86,6 @@
 .sidebar__chats {
   height: 100%;
 }
+.sidebar__chats.hidden {
+  display: none;
+}
