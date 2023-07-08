@@ -1,8 +1,9 @@
 import axios, { AxiosResponse } from "axios"
-import { makeAutoObservable } from "mobx"
+import { makeAutoObservable, toJS } from "mobx"
 import $api, { API_URL } from "../http"
 import IChat from "../types/chat"
 import IUser from "../types/user"
+import AppStore from "./AppStore"
 
 class ChatStore {
   id: string | null = null
@@ -37,6 +38,11 @@ class ChatStore {
     const groupData = group.data.length ? group.data : undefined
 
     return [userData, groupData]
+  }
+
+  async findChatWithUser(user: IUser) {
+    const chat: AxiosResponse<IChat> = await $api.get(`${API_URL}/chat/find/${user.uid}`)
+    return chat.data
   }
 }
 

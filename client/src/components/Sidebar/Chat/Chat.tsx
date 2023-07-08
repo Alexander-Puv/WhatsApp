@@ -11,26 +11,32 @@ import IUser from '../../../types/user'
 
 interface ChatProps {
   chatId: string,
-  group?: IChat
+  chatData?: IChat
 }
 
-const Chat = ({chatId, group}: ChatProps) => {
-  const [chat, setChat] = useState<IChat | null>(group ? group : null)
+const Chat = ({chatId, chatData}: ChatProps) => {
+  const [chat, setChat] = useState<IChat | null>(chatData ? chatData : null)
   const [member, setMember] = useState<IUser | null>(null)
   
   const appStoreUser = toJS(AppStore.user)
 
   useEffect(() => {
-    const findChat = async () => {
-      const chat = await ChatStore.findChatById(chatId)
-      setChat(chat)
+    const findMember = async (chat: IChat) => {
       setMember(await ChatStore.findUserById(
         chat.members[0] !== appStoreUser.uid
         ? chat.members[0]
         : chat.members[1]
       ))
     }
-    !group && findChat()
+
+    const findChat = async () => {
+      const chat = await ChatStore.findChatById(chatId)
+      setChat(chat)
+      await findMember(chat)
+    }
+    
+    !chatData && findChat()
+    chatData && !chatData.isGroup && findMember(chatData)
   }, [])
 
   if (!chat) return <></>
