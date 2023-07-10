@@ -1,9 +1,8 @@
-import axios, { AxiosResponse } from "axios"
-import { makeAutoObservable, toJS } from "mobx"
+import { AxiosResponse } from "axios"
+import { makeAutoObservable } from "mobx"
 import $api, { API_URL } from "../http"
 import IChat from "../types/chat"
 import IUser from "../types/user"
-import AppStore from "./AppStore"
 
 class ChatStore {
   id: string | null = null

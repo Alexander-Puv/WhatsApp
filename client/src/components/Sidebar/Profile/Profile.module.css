@@ -1,0 +1,67 @@
+.profile {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-100%);
+  padding: 20px;
+  background-color: var(--app-bg);
+  z-index: 10;
+  transition: .5s ease;
+}
+.profile.open {
+  transform: translate(0);
+}
+
+/* close button */
+.profile__closeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border-radius: 50%;
+}
+.profile__closeButton:hover {
+  background-color: var(--underline-color);
+  transition: .15s ease;
+}
+.profile__closeButton svg {
+  width: 32px;
+  height: 32px;
+  padding: 2px;
+}
+
+/* top */
+.profile__top {
+  display: flex;
+  gap: 10px;
+}
+
+.profile__photo {
+  flex: 0 0 60px;
+  width: 60px;
+  height: 60px;
+}
+.profile__photo button {
+  width: 100%;
+  height: 100%;
+}
+
+.profile__userData {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile__username {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile__date {
+  font-weight: 300;
+  color: var(--secondary-text)
+}

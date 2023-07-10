@@ -9,11 +9,13 @@ import IChat from '../../types/chat'
 import UserIcon from '../UI/UserIcon'
 import Chat from './Chat/Chat'
 import cl from './Sideabr.module.css'
+import Profile from './Profile/Profile'
 
 const Sidebar = () => {
   const [searchQuery, setSearchQuery] = useState('')
   const [searchChats, setSearchChats] = useState<IChat[] | undefined | null>(null)
   const [userChat, setUserChat] = useState<IChat | undefined | null>(null)
+  const [profileOpen, setProfileOpen] = useState(false)
   
   useEffect(() => {
     const delayDebounceFn = setTimeout(async () => {
@@ -37,8 +39,10 @@ const Sidebar = () => {
 
   return (
     <div className={cl.sidebar}>
+      <Profile profileOpen={profileOpen} setProfileOpen={setProfileOpen} />
+      
       <header className={cl.sidebar__header + ' header'}>
-        <UserIcon />
+        <UserIcon onClick={() => setProfileOpen(true)} />
         <div className={cl.icons}>
           <button className="svg-parent">
             <GoKebabVertical />
@@ -80,7 +84,6 @@ const Sidebar = () => {
             )}
           </div>}
         </div>
-          
       </div>
     </div>
   )
