@@ -19,15 +19,14 @@ const Profile = ({profileOpen, setProfileOpen}: ProfileProps) => {
         <VscClose />
       </button>
 
-      <div className={cl.profile__top}>
-        <div className={cl.profile__photo}>
-          {/* {user.photo} */}
-          <UserIcon />
-        </div>
-        <div className={cl.profile__userData}>
-          <h2 className={cl.profile__username}>{user.username}</h2>
-          <h3 className={cl.profile__date}>{getDate(new Date(user.createdAt))}</h3>
-        </div>
+      <div className={cl.profile_back}>Profile</div>
+      <div className={cl.profile__photo}>
+        {/* {user.photo} */}
+        <UserIcon />
+      </div>
+      <div className={cl.profile__userData}>
+        <h1 className={cl.profile__username}>{user.username}</h1>
+        <h3 className={cl.profile__date}>{getDate(new Date(user.createdAt))}</h3>
       </div>
     </div>
   )

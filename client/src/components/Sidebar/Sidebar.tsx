@@ -56,7 +56,7 @@ const Sidebar = () => {
             <button className={cl.search__button + ' svg-parent'}>
               <AiOutlineSearch />
             </button>
-            <input className={cl.search__input} placeholder='Поиск или новый чат'
+            <input className={cl.search__input} placeholder='Search or new chat'
               autoComplete='off'
               value={searchQuery} onChange={e => setSearchQuery(e.target.value)}/>
             {searchQuery &&
