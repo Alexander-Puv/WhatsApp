@@ -49,6 +49,17 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 400;
 }
 
+textarea {
+  background-color: transparent;
+  resize: none;
+  outline: none;
+  font-size: 20px;
+  font-weight: 350;
+  font-family: Segoe UI,Helvetica Neue,Helvetica,Lucida Grande,Arial,Ubuntu,Cantarell,Fira Sans,sans-serif;
+  color: var(--primary-text);
+  border: 0;
+}
+
 body {
   background-color: var(--app-bg);
   font-family: Segoe UI,Helvetica Neue,Helvetica,Lucida Grande,Arial,Ubuntu,Cantarell,Fira Sans,sans-serif;

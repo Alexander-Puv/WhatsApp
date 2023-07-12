@@ -3,10 +3,7 @@
   width: 100%;
   height: 100%;
   transform: translateX(-100%);
-  padding: 60px 20px 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  padding: 80px 40px;
   background-color: var(--app-bg);
   z-index: 10;
   transition: .5s ease;
@@ -15,23 +12,40 @@
   transform: translate(0);
 }
 
-/* close button */
-.profile__closeButton {
+/* background */
+.profile_back {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  border-radius: 50%;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  padding: 40px 20px 0;
+  background-color: var(--incoming-bg);
+  z-index: 0;
 }
-.profile__closeButton:hover {
-  background-color: var(--underline-color);
-  transition: .15s ease;
+.profile_back>div {
+  display: flex;
 }
-.profile__closeButton svg {
-  width: 32px;
-  height: 32px;
-  padding: 2px;
+.profile_back svg {
+  margin-right: 20px;
+  cursor: pointer;
+}
+.profile_back h2 {
+  line-height: 100%;
 }
 
+/* forward */
+.profile_forward {
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  z-index: 1;
+}
+
+/* photo */
 .profile__photo {
   width: 200px;
   height: 200px;
@@ -42,17 +56,19 @@
   height: 100%;
 }
 
+/* user data */
 .profile__userData {
-  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 2.5px;
+  text-align: center;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .profile__username {
+  font-weight: 350;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -61,4 +77,20 @@
 .profile__date {
   font-weight: 300;
   color: var(--secondary-text)
+}
+
+/* user description */
+.profile__description {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.profile__description h3 {
+  font-weight: 300;
+}
+.profile__description textarea {
+  flex: 1;
+  width: 100%;
 }
