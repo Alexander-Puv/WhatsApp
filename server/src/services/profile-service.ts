@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import ApiError from '../error/api-error';
 import userService from './user-service';
+import UserDto from '../dtos/user-dto';
 
 class ProfileService {
   async password(refreshToken: string | undefined, prevPassword: string, nextPassword: string) {
@@ -16,13 +17,19 @@ class ProfileService {
 
     const hashPassword = await bcrypt.hash(nextPassword, 6)
     user.password = hashPassword
-    return await user.save();
+    return new UserDto(await user.save())
   }
 
   async photo(refreshToken: string | undefined, photo: string) {
     const user = await userService.getUserWithRefresh(refreshToken)
     user.photo = photo
-    return await user.save()
+    return new UserDto(await user.save())
+  }
+
+  async description(refreshToken: string, description: string) {
+    const user = await userService.getUserWithRefresh(refreshToken)
+    user.description = description
+    return new UserDto(await user.save())
   }
 }
 

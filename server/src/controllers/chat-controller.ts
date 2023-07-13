@@ -2,6 +2,7 @@ import chatService from "../services/chat-service"
 import controllerFunc from "../types/controllerFunc"
 
 class ChatController {
+  // post
   chat: controllerFunc = async (req, res, next) => {
     try {
       const {receiverId} = req.body
@@ -24,6 +25,7 @@ class ChatController {
     }
   }
 
+  // get
   findChatById: controllerFunc = async (req, res, next) => {
     try {
       const {id} = req.params
@@ -57,6 +59,7 @@ class ChatController {
     }
   }
 
+  // put
   join: controllerFunc = async (req, res, next) => {
     try {
       const groupId = req.params.id
@@ -79,6 +82,18 @@ class ChatController {
     }
   }
 
+  description: controllerFunc = async (req, res, next) => {
+    try {
+      const groupId = req.params.id
+      const {description} = req.body
+      const groupData = await chatService.description(groupId, description)
+      return res.json(groupData)
+    } catch (e) {
+      next(e)
+    }
+  }
+
+  // delete
   deleteChat: controllerFunc = async (req, res, next) => {
     try {
       const chatId = req.params.id

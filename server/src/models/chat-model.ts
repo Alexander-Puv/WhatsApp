@@ -13,6 +13,7 @@ const ChatSchema = new Schema<IChatModel>({
   isGroup: { type: Boolean, default: false },
   name: {type: String, required: function() {return this.isGroup}},
   photo: String,
+  description: String,
   isDeleted: Boolean
 })
 

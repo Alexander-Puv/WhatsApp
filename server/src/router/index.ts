@@ -21,8 +21,9 @@ router.get('/chat/:id', chatController.findChatById)
 router.get('/chat/find/:uid', chatController.findChatByUser)
 router.get('/chat/group/find', chatController.findGroupByName)
 
-router.put('/chat/group/:id', chatController.join)
+router.put('/chat/group/:id/member', chatController.join)
 router.put('/chat/group/:id/photo', chatController.photo)
+router.put('/chat/group/:id/description', chatController.description)
 
 router.delete('/chat/:id', chatController.deleteChat) // delete for one user
 router.delete('/chat/group/:id', chatController.deleteGroup)
@@ -35,5 +36,6 @@ router.get('/user/:id', userController.findUserById)
 // user profile
 router.put('/profile/password', profileController.password)
 router.put('/profile/photo', profileController.photo)
+router.put('/profile/description', profileController.description)
 
 export default router

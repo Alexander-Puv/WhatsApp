@@ -6,6 +6,7 @@ import userModel from "../models/user-model"
 import userService from "./user-service"
 
 class ChatService {
+  // post
   async chat(refreshToken: string, receiverId: string) {
     const sender = await userService.getUserWithRefresh(refreshToken)
     if (!receiverId) {
@@ -53,6 +54,7 @@ class ChatService {
     return new ChatDto(group)
   }
 
+  // get
   async findChatById(id: string) {
     return new ChatDto(await chatModel.findById(id))
   }
@@ -70,6 +72,7 @@ class ChatService {
     return await chatModel.findOne({members: {$all: [id, user._id]}, isGroup: false})
   }
 
+  // put
   async join(refreshToken: string, groupId: string) {
     const user = await userService.getUserWithRefresh(refreshToken)
     const group = await chatModel.findByIdAndUpdate(groupId, {$push: {members: user._id}}, {new: true})
@@ -86,6 +89,11 @@ class ChatService {
     return new ChatDto(await group.save())
   }
 
+  async description(groupId: string, description: string) {
+    return new ChatDto(await chatModel.findByIdAndUpdate(groupId, {$set: {description}}, {new: true}))
+  }
+
+  // delete
   async deleteChat(refreshToken: string, chatId: string) {
     const user = await userService.getUserWithRefresh(refreshToken)
     await user.updateOne({$pull: {chats: chatId}})

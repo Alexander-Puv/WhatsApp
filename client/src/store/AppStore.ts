@@ -25,33 +25,34 @@ class AppStore {
     this.user = user
   }
 
+  // auth
   async register(username: string, password: string) {
     try {
-      const response: AxiosResponse<UserData> = await $api.post(`/auth/register`, {username, password})
-      localStorage.setItem('token', response.data.accessToken)
+      const {data}: AxiosResponse<UserData> = await $api.post(`/auth/register`, {username, password})
+      localStorage.setItem('token', data.accessToken)
       this.setIsAuth(true)
-      this.setUser(response.data.user)
+      this.setUser(data.user)
     } catch (e) {
       throw (e as AxiosError<ApiError>).response?.data
     }
   }
   async login(username: string, password: string) {
     try {
-      const response: AxiosResponse<UserData> = await $api.post(`/auth/login`, {username, password})
-      localStorage.setItem('token', response.data.accessToken)
+      const {data}: AxiosResponse<UserData> = await $api.post(`/auth/login`, {username, password})
+      localStorage.setItem('token', data.accessToken)
       this.setIsAuth(true)
-      this.setUser(response.data.user)
-      ChatStore.setChats(response.data.user.chats)
+      this.setUser(data.user)
+      ChatStore.setChats(data.user.chats)
     } catch (e) {
       throw (e as AxiosError<ApiError>).response?.data
     }
   }
   async logout () {
     try {
-      const response: AxiosResponse<UserData> = await $api.post(`/auth/logout`)
+      const {data}: AxiosResponse<UserData> = await $api.post(`/auth/logout`)
       localStorage.removeItem('token')
       this.setIsAuth(false)
-      this.setUser(response.data.user)
+      this.setUser(data.user)
     } catch (e) {
       throw (e as AxiosError<ApiError>).response?.data
     }
@@ -59,15 +60,25 @@ class AppStore {
 
   async checkAuth() {
     try {
-      const response = await axios.get<UserData>(`${API_URL}/auth/refresh`, {withCredentials: true})
-      localStorage.setItem('token', response.data.accessToken)
+      const {data} = await axios.get<UserData>(`${API_URL}/auth/refresh`, {withCredentials: true})
+      localStorage.setItem('token', data.accessToken)
       this.setIsAuth(true)
-      this.setUser(response.data.user)
-      ChatStore.setChats(response.data.user.chats)
+      this.setUser(data.user)
+      ChatStore.setChats(data.user.chats)
     } catch (e) {
       throw (e as AxiosError<ApiError>).response?.data
     } finally {
       this.setIsLoading(false)
+    }
+  }
+
+  // profile
+
+  async changeDescription(description: string): Promise<string> {
+    try {
+      return (await $api.put(`/profile/description`, {description})).data.description
+    } catch (e) {
+      throw (e as AxiosError<ApiError>).response?.data
     }
   }
 }

@@ -13,7 +13,8 @@ type IChat = { // if chat
   members: string[],
   messages: IMsg[],
   name: string,
-  photo: string,
-  isDeleted: boolean
+  photo?: string,
+  description?: string,
+  isDeleted?: boolean
 }
 export default IChat

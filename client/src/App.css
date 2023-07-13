@@ -53,7 +53,7 @@ textarea {
   background-color: transparent;
   resize: none;
   outline: none;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 350;
   font-family: Segoe UI,Helvetica Neue,Helvetica,Lucida Grande,Arial,Ubuntu,Cantarell,Fira Sans,sans-serif;
   color: var(--primary-text);
@@ -116,6 +116,9 @@ body {
   height: 24px;
   fill: var(--secondary-text);
   transition: .15s ease;
+}
+.svg-parent.hover {
+  cursor: pointer;
 }
 .svg-parent.hover>svg:hover {
   fill: var(--primary-text);

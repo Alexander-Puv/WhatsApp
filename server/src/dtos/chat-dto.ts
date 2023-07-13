@@ -10,6 +10,7 @@ export default class ChatDto {
   messages: IMsg[]
   name?: string
   photo?: string
+  description?: string
   isDeleted?: boolean
 
   constructor(model: IChatModel) {
@@ -24,6 +25,7 @@ export default class ChatDto {
     this.isGroup = model.isGroup
     this.name = model.name
     this.photo = model.photo
+    this.description = model.description
     this.isDeleted = model.isDeleted
   }
 }

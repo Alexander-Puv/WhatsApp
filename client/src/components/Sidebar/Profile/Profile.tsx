@@ -1,10 +1,11 @@
-import { VscClose } from 'react-icons/vsc'
-import { BsArrowLeft } from 'react-icons/bs'
-import cl from './Profile.module.css'
-import AppStore from '../../../store/AppStore';
 import { toJS } from 'mobx';
-import UserIcon from '../../UI/UserIcon';
+import { useEffect, useState } from 'react';
+import { BsArrowLeft, BsPencilFill } from 'react-icons/bs';
+import { AiOutlineCheck } from 'react-icons/ai';
+import AppStore from '../../../store/AppStore';
 import { getDate } from '../../../utils/getMessageTime';
+import UserIcon from '../../UI/UserIcon';
+import cl from './Profile.module.css';
 
 interface ProfileProps {
   profileOpen: boolean,
@@ -13,6 +14,24 @@ interface ProfileProps {
 
 const Profile = ({profileOpen, setProfileOpen}: ProfileProps) => {
   const user = toJS(AppStore.user)
+  const [changeDescription, setChangeDescription] = useState(false)
+  const [tryChangeDescription, setTryChangeDescription] = useState(false)
+  const [description, setDescription] = useState(user.description || "")
+
+  useEffect(() => {
+    const changeDescription = async () => {
+      try {
+        setDescription(await AppStore.changeDescription(description))
+        setChangeDescription(false)
+      } catch (e) {
+        console.log(e)
+      } finally {
+        setTryChangeDescription(false)
+      }
+    }
+    tryChangeDescription && changeDescription()
+  }, [tryChangeDescription])
+
   return (
     <div className={`${cl.profile} ${profileOpen && cl.open}`}>
       <div className={cl.profile_back}>
@@ -35,7 +54,20 @@ const Profile = ({profileOpen, setProfileOpen}: ProfileProps) => {
         </div>
         <div className={cl.profile__description}>
           <h3>Description:</h3>
-          <textarea maxLength={150} onKeyDown={e => e.code === 'Enter' && e.preventDefault()} />
+          <div className={cl.profile__changeDescription}>
+            {!changeDescription ? <>
+              <p>{description}</p>
+              <div className="svg-parent hover" onClick={() => setChangeDescription(true)}>
+                <BsPencilFill />
+              </div>
+            </>:<>
+              <textarea maxLength={200} onKeyDown={e => e.code === 'Enter' && e.preventDefault()}
+                value={description} onChange={e => setDescription(e.target.value)} />
+                <div className="svg-parent hover" onClick={() => setTryChangeDescription(true)}>
+                  <AiOutlineCheck />
+                </div>
+            </>}
+          </div>
         </div>
       </div>
     </div>

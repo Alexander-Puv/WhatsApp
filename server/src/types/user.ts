@@ -5,8 +5,9 @@ export default interface IUser {
   uid: string,
   username: string,
   createdAt: Date,
-  photo: string,
-  chats: IChat[]
+  photo?: string,
+  description?: string,
+  chats?: IChat[]
 }
 
 export interface IUserModel extends Document {
@@ -14,5 +15,6 @@ export interface IUserModel extends Document {
   password: string,
   createdAt: Date,
   photo?: string,
+  description: string,
   chats: Types.Array<IChatModel['_id']>,
 }

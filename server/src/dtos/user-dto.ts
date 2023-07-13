@@ -7,6 +7,7 @@ export default class UserDto {
   uid: Types.ObjectId
   createdAt: Date
   photo: string | null
+  description: string
   chats: IChat[]
 
   constructor(model: IUserModel) {
@@ -14,6 +15,7 @@ export default class UserDto {
     this.uid = model._id
     this.createdAt = model.createdAt
     this.photo = model.photo
+    this.description = model.description
     this.chats = model.chats
   }
 }

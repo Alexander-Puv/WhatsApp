@@ -23,6 +23,17 @@ class ProfileController {
       next(e)
     }
   }
+
+  description: controllerFunc = async (req, res, next) => {
+    try {
+      const {description} = req.body
+      const {refreshToken} = req.cookies
+      const userData = await profileService.description(refreshToken, description)
+      return res.json(userData)
+    } catch (e) {
+      next(e)
+    }
+  }
 }
 
 export default new ProfileController()
