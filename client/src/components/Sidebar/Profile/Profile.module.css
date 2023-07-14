@@ -91,27 +91,27 @@
   font-weight: 300;
 }
 
-.profile__changeDescription {
+.profile__changeDesc {
   flex: 1;
   display: flex;
   align-items: flex-start;
   gap: 5px;
 }
 
-.profile__changeDescription>div {
+.profile__changeDesc>div {
   padding-top: 10px;
 }
 
-.profile__changeDescription p,
-.profile__changeDescription textarea {
+.profile__changeDesc p,
+.profile__changeDesc textarea {
   flex: 1;
   height: 100%;
   padding: 5px;
 }
-.profile__changeDescription p {
+.profile__changeDesc p {
   word-break: break-word;
 }
-.profile__changeDescription textarea {
+.profile__changeDesc textarea {
   border: 1px solid var(--primary-text);
   border-radius: 4px;
 }
