@@ -7,6 +7,7 @@ import { Server } from 'socket.io'
 import ioConnection from './io'
 import errorMiddleware from './middlewares/error-middleware'
 import router from './router'
+import path from 'path'
 
 dotenv.config()
 const PORT = process.env.PORT || 5000
@@ -19,6 +20,7 @@ app.use(cors({
   origin: process.env.CLIENT_URL
 }))
 app.use('/api', router)
+app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')))
 app.use(errorMiddleware)
 
 const start = async () => {

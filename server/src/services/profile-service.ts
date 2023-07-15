@@ -1,7 +1,9 @@
 import bcrypt from 'bcrypt';
-import ApiError from '../error/api-error';
-import userService from './user-service';
+import { Request, Response } from 'express';
 import UserDto from '../dtos/user-dto';
+import ApiError from '../error/api-error';
+import upload from '../storage';
+import userService from './user-service';
 
 class ProfileService {
   async password(refreshToken: string | undefined, prevPassword: string, nextPassword: string) {
@@ -20,10 +22,20 @@ class ProfileService {
     return new UserDto(await user.save())
   }
 
-  async photo(refreshToken: string | undefined, photo: string) {
-    const user = await userService.getUserWithRefresh(refreshToken)
-    user.photo = photo
-    return new UserDto(await user.save())
+  async photo(refreshToken: string | undefined, req: Request, res: Response) {
+    return new Promise(async (resolve, reject) => {
+      upload.single('photo')(req, res, async (err) => {
+        if (err) {
+          reject(err)
+          return
+        }
+
+        const filePath = req.file.path
+        const user = await userService.getUserWithRefresh(refreshToken)
+        user.photo = filePath
+        resolve(new UserDto(await user.save()))
+      })
+    })
   }
 
   async description(refreshToken: string, description: string) {
