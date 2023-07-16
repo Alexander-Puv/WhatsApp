@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosResponse } from "axios"
+import axios, { AxiosError } from "axios"
 import { makeAutoObservable } from "mobx"
 import $api, { API_URL } from "../http"
 import ApiError from "../types/api/apiError"
@@ -28,7 +28,7 @@ class AppStore {
   // auth
   async register(username: string, password: string) {
     try {
-      const {data}: AxiosResponse<UserData> = await $api.post(`/auth/register`, {username, password})
+      const {data} = await $api.post<UserData>(`/auth/register`, {username, password})
       localStorage.setItem('token', data.accessToken)
       this.setIsAuth(true)
       this.setUser(data.user)
@@ -38,7 +38,7 @@ class AppStore {
   }
   async login(username: string, password: string) {
     try {
-      const {data}: AxiosResponse<UserData> = await $api.post(`/auth/login`, {username, password})
+      const {data} = await $api.post<UserData>(`/auth/login`, {username, password})
       localStorage.setItem('token', data.accessToken)
       this.setIsAuth(true)
       this.setUser(data.user)
@@ -49,7 +49,7 @@ class AppStore {
   }
   async logout () {
     try {
-      const {data}: AxiosResponse<UserData> = await $api.post(`/auth/logout`)
+      const {data} = await $api.post<UserData>(`/auth/logout`)
       localStorage.removeItem('token')
       this.setIsAuth(false)
       this.setUser(data.user)
@@ -74,9 +74,25 @@ class AppStore {
 
   // profile
 
+  async changePhoto(photo: File): Promise<string> {
+    const formData = new FormData()
+    formData.append('photo', photo)
+    
+    try {
+      const {data} = await $api.put<IUser>(`/profile/photo`, {formData}, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      return data.photo as string
+    } catch (e) {
+      throw (e as AxiosError<ApiError>).response?.data
+    }
+  }
+
   async changeDescription(description: string): Promise<string> {
     try {
-      return (await $api.put(`/profile/description`, {description})).data.description
+      return (await $api.put<IUser>(`/profile/description`, {description})).data.description as string
     } catch (e) {
       throw (e as AxiosError<ApiError>).response?.data
     }

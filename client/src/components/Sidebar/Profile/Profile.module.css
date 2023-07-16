@@ -49,6 +49,11 @@
   width: 200px;
   height: 200px;
 }
+
+.profile__photo input {
+  display: none;
+}
+
 .profile__photo button,
 .profile__photo img {
   width: 100%;

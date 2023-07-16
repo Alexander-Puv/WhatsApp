@@ -1,11 +1,12 @@
 import { toJS } from 'mobx';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { BsArrowLeft, BsPencilFill } from 'react-icons/bs';
 import { AiOutlineCheck } from 'react-icons/ai';
 import AppStore from '../../../store/AppStore';
 import { getDate } from '../../../utils/getMessageTime';
 import UserIcon from '../../UI/UserIcon';
 import cl from './Profile.module.css';
+import { ROOT_URL } from '../../../http';
 
 interface ProfileProps {
   profileOpen: boolean,
@@ -17,6 +18,8 @@ const Profile = ({profileOpen, setProfileOpen}: ProfileProps) => {
   const [changeDesc, setChangeDesc] = useState(false)
   const [tryChangeDesc, setTryChangeDesc] = useState(false)
   const [description, setDescription] = useState(user.description || "")
+  const photoRef = useRef<HTMLInputElement>(null)
+  const [photo, setPhoto] = useState<File | null>(null)
 
   useEffect(() => {
     const changeDesc = async () => {
@@ -32,6 +35,10 @@ const Profile = ({profileOpen, setProfileOpen}: ProfileProps) => {
     tryChangeDesc && changeDesc()
   }, [tryChangeDesc])
 
+  const photoChange = () => {
+
+  }
+
   return (
     <div className={`${cl.profile} ${profileOpen && cl.open}`}>
       <div className={cl.profile_back}>
@@ -45,8 +52,12 @@ const Profile = ({profileOpen, setProfileOpen}: ProfileProps) => {
 
       <div className={cl.profile_forward}>
         <div className={cl.profile__photo}>
-          {/* {user.photo} */}
-          <UserIcon />
+          <input type="file" ref={photoRef} onChange={photoChange} />
+          {user.photo ?
+            <img src={ROOT_URL + '/' + user.photo} />
+          :
+            <UserIcon />
+          }
         </div>
         <div className={cl.profile__userData}>
           <h1 className={cl.profile__username}>{user.username}</h1>
