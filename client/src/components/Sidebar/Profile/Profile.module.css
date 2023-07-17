@@ -55,9 +55,14 @@
 }
 
 .profile__photo button,
-.profile__photo img {
+.profile__photo div {
   width: 100%;
   height: 100%;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  cursor: pointer;
 }
 
 /* user data */

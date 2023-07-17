@@ -74,17 +74,17 @@ class AppStore {
 
   // profile
 
-  async changePhoto(photo: File): Promise<string> {
+  async changePhoto(photo: File) {
     const formData = new FormData()
     formData.append('photo', photo)
     
     try {
-      const {data} = await $api.put<IUser>(`/profile/photo`, {formData}, {
+      const {data} = await $api.put<IUser>(`/profile/photo`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       })
-      return data.photo as string
+      this.setUser(data)
     } catch (e) {
       throw (e as AxiosError<ApiError>).response?.data
     }

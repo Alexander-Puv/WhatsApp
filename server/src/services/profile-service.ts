@@ -32,7 +32,7 @@ class ProfileService {
 
         const filePath = req.file.path
         const user = await userService.getUserWithRefresh(refreshToken)
-        user.photo = filePath
+        user.photo = process.env.API_URL + '/' + filePath.replace('\\', '/')
         resolve(new UserDto(await user.save()))
       })
     })

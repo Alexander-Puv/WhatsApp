@@ -1,12 +1,12 @@
 import { toJS } from 'mobx';
-import { useEffect, useRef, useState } from 'react';
-import { BsArrowLeft, BsPencilFill } from 'react-icons/bs';
+import { observer } from 'mobx-react-lite';
+import React, { useEffect, useRef, useState } from 'react';
 import { AiOutlineCheck } from 'react-icons/ai';
+import { BsArrowLeft, BsPencilFill } from 'react-icons/bs';
 import AppStore from '../../../store/AppStore';
 import { getDate } from '../../../utils/getMessageTime';
 import UserIcon from '../../UI/UserIcon';
 import cl from './Profile.module.css';
-import { ROOT_URL } from '../../../http';
 
 interface ProfileProps {
   profileOpen: boolean,
@@ -14,12 +14,11 @@ interface ProfileProps {
 }
 
 const Profile = ({profileOpen, setProfileOpen}: ProfileProps) => {
-  const user = toJS(AppStore.user)
+  const {user} = AppStore
   const [changeDesc, setChangeDesc] = useState(false)
   const [tryChangeDesc, setTryChangeDesc] = useState(false)
   const [description, setDescription] = useState(user.description || "")
   const photoRef = useRef<HTMLInputElement>(null)
-  const [photo, setPhoto] = useState<File | null>(null)
 
   useEffect(() => {
     const changeDesc = async () => {
@@ -35,8 +34,9 @@ const Profile = ({profileOpen, setProfileOpen}: ProfileProps) => {
     tryChangeDesc && changeDesc()
   }, [tryChangeDesc])
 
-  const photoChange = () => {
-
+  const photoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const photo = e.target.files?.[0]
+    photo && AppStore.changePhoto(photo)
   }
 
   return (
@@ -51,10 +51,10 @@ const Profile = ({profileOpen, setProfileOpen}: ProfileProps) => {
       </div>
 
       <div className={cl.profile_forward}>
-        <div className={cl.profile__photo}>
-          <input type="file" ref={photoRef} onChange={photoChange} />
+        <div className={cl.profile__photo} onClick={() => photoRef.current?.click()}>
+          <input type="file" accept="image/*" ref={photoRef} onChange={photoChange} />
           {user.photo ?
-            <img src={ROOT_URL + '/' + user.photo} />
+            <div style={{backgroundImage: `url(${user.photo})`}} />
           :
             <UserIcon />
           }
@@ -85,4 +85,4 @@ const Profile = ({profileOpen, setProfileOpen}: ProfileProps) => {
   )
 }
 
-export default Profile
+export default observer(Profile)

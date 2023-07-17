@@ -10,8 +10,11 @@ import UserIcon from '../UI/UserIcon'
 import Chat from './Chat/Chat'
 import cl from './Sideabr.module.css'
 import Profile from './Profile/Profile'
+import { observer } from 'mobx-react-lite'
+import AppStore from '../../store/AppStore'
 
 const Sidebar = () => {
+  const {user} = AppStore
   const [searchQuery, setSearchQuery] = useState('')
   const [searchChats, setSearchChats] = useState<IChat[] | undefined | null>(null)
   const [userChat, setUserChat] = useState<IChat | undefined | null>(null)
@@ -42,7 +45,13 @@ const Sidebar = () => {
       <Profile profileOpen={profileOpen} setProfileOpen={setProfileOpen} />
       
       <header className={cl.sidebar__header + ' header'}>
-        <UserIcon onClick={() => setProfileOpen(true)} />
+        <div onClick={() => setProfileOpen(true)}>
+          {user.photo ?
+            <div className={cl.sidebar__photo} style={{backgroundImage: `url(${user.photo})`}} />
+          :
+            <UserIcon />
+          }
+        </div>
         <div className={cl.icons}>
           <button className="svg-parent">
             <GoKebabVertical />
@@ -89,4 +98,4 @@ const Sidebar = () => {
   )
 }
 
-export default Sidebar
+export default observer(Sidebar)
