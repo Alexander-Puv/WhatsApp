@@ -4,6 +4,7 @@ import UserDto from '../dtos/user-dto';
 import ApiError from '../error/api-error';
 import upload from '../storage';
 import userService from './user-service';
+import fs from 'fs';
 
 class ProfileService {
   async password(refreshToken: string | undefined, prevPassword: string, nextPassword: string) {
@@ -30,8 +31,17 @@ class ProfileService {
           return
         }
 
-        const filePath = req.file.path
         const user = await userService.getUserWithRefresh(refreshToken)
+        if (user.photo) {
+          const existingPhotoPath = user.photo.replace(process.env.API_URL + '/', '')
+          fs.unlink(existingPhotoPath, (err) => {
+            if (err) {
+              throw ApiError.BadRequest(err.message)
+            }
+          })
+        }
+
+        const filePath = req.file.path
         user.photo = process.env.API_URL + '/' + filePath.replace('\\', '/')
         resolve(new UserDto(await user.save()))
       })
