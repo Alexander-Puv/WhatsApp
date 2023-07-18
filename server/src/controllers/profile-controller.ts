@@ -1,3 +1,4 @@
+import ApiError from "../error/api-error"
 import profileService from "../services/profile-service"
 import upload from "../storage"
 import controllerFunc from "../types/controllerFunc"
@@ -21,7 +22,7 @@ class ProfileController {
         upload.single('photo')(req, res, async (err) => {
           if (err) {
             reject(err)
-            return
+            throw ApiError.BadRequest(err.message)
           }
           const filePath = req.file.path
           await profileService.photo(refreshToken, filePath, resolve)
