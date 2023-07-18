@@ -1,4 +1,5 @@
 import profileService from "../services/profile-service"
+import upload from "../storage"
 import controllerFunc from "../types/controllerFunc"
 
 class ProfileController {
@@ -16,7 +17,16 @@ class ProfileController {
   photo: controllerFunc = async (req, res, next) => {
     try {
       const {refreshToken} = req.cookies
-      const userData = await profileService.photo(refreshToken, req, res)
+      const userData = await new Promise(async (resolve, reject) => {
+        upload.single('photo')(req, res, async (err) => {
+          if (err) {
+            reject(err)
+            return
+          }
+          const filePath = req.file.path
+          await profileService.photo(refreshToken, filePath, resolve)
+        })
+      })
       return res.json(userData)
     } catch (e) {
       next(e)

@@ -1,10 +1,8 @@
 import bcrypt from 'bcrypt';
-import { Request, Response } from 'express';
+import fs from 'fs';
 import UserDto from '../dtos/user-dto';
 import ApiError from '../error/api-error';
-import upload from '../storage';
 import userService from './user-service';
-import fs from 'fs';
 
 class ProfileService {
   async password(refreshToken: string | undefined, prevPassword: string, nextPassword: string) {
@@ -23,29 +21,19 @@ class ProfileService {
     return new UserDto(await user.save())
   }
 
-  async photo(refreshToken: string | undefined, req: Request, res: Response) {
-    return new Promise(async (resolve, reject) => {
-      upload.single('photo')(req, res, async (err) => {
+  async photo(refreshToken: string | undefined, filePath: string, resolve: (val: unknown) => void) {
+    const user = await userService.getUserWithRefresh(refreshToken)
+    if (user.photo) {
+      const existingPhotoPath = user.photo.replace(process.env.API_URL + '/', '')
+      fs.unlink(existingPhotoPath, (err) => {
         if (err) {
-          reject(err)
-          return
+          throw ApiError.BadRequest(err.message)
         }
-
-        const user = await userService.getUserWithRefresh(refreshToken)
-        if (user.photo) {
-          const existingPhotoPath = user.photo.replace(process.env.API_URL + '/', '')
-          fs.unlink(existingPhotoPath, (err) => {
-            if (err) {
-              throw ApiError.BadRequest(err.message)
-            }
-          })
-        }
-
-        const filePath = req.file.path
-        user.photo = process.env.API_URL + '/' + filePath.replace('\\', '/')
-        resolve(new UserDto(await user.save()))
       })
-    })
+    }
+
+    user.photo = process.env.API_URL + '/' + filePath.replace('\\', '/')
+    resolve(new UserDto(await user.save()))
   }
 
   async description(refreshToken: string, description: string) {
