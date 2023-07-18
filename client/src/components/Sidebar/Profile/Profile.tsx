@@ -16,27 +16,17 @@ interface ProfileProps {
 const Profile = ({profileOpen, setProfileOpen}: ProfileProps) => {
   const {user} = AppStore
   const [changeDesc, setChangeDesc] = useState(false)
-  const [tryChangeDesc, setTryChangeDesc] = useState(false)
   const [description, setDescription] = useState(user.description || "")
   const photoRef = useRef<HTMLInputElement>(null)
 
-  useEffect(() => {
-    const changeDesc = async () => {
-      try {
-        setDescription(await AppStore.changeDescription(description))
-        setChangeDesc(false)
-      } catch (e) {
-        console.log(e)
-      } finally {
-        setTryChangeDesc(false)
-      }
-    }
-    tryChangeDesc && changeDesc()
-  }, [tryChangeDesc])
-
-  const photoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const changePhoto = (e: React.ChangeEvent<HTMLInputElement>) => {
     const photo = e.target.files?.[0]
     photo && AppStore.changePhoto(photo)
+  }
+
+  const changeDescription = () => {
+    AppStore.changeDescription(description)
+    setChangeDesc(false)
   }
 
   return (
@@ -52,7 +42,7 @@ const Profile = ({profileOpen, setProfileOpen}: ProfileProps) => {
 
       <div className={cl.profile_forward}>
         <div className={cl.profile__photo} onClick={() => photoRef.current?.click()}>
-          <input type="file" accept="image/*" ref={photoRef} onChange={photoChange} />
+          <input type="file" accept="image/*" ref={photoRef} onChange={changePhoto} />
           {user.photo ?
             <div style={{backgroundImage: `url(${user.photo})`}} />
           :
@@ -74,7 +64,7 @@ const Profile = ({profileOpen, setProfileOpen}: ProfileProps) => {
             </>:<>
               <textarea maxLength={200} onKeyDown={e => e.code === 'Enter' && e.preventDefault()}
                 value={description} onChange={e => setDescription(e.target.value)} />
-                <div className="svg-parent hover" onClick={() => setTryChangeDesc(true)}>
+                <div className="svg-parent hover" onClick={changeDescription}>
                   <AiOutlineCheck />
                 </div>
             </>}

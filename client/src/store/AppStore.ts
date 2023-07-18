@@ -90,9 +90,10 @@ class AppStore {
     }
   }
 
-  async changeDescription(description: string): Promise<string> {
+  async changeDescription(description: string) {
     try {
-      return (await $api.put<IUser>(`/profile/description`, {description})).data.description as string
+      const {data} = await $api.put<IUser>(`/profile/description`, {description})
+      this.setUser(data)
     } catch (e) {
       throw (e as AxiosError<ApiError>).response?.data
     }
