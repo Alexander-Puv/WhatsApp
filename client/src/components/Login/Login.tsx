@@ -18,8 +18,12 @@ const Login = () => {
     }
   }
 
-  const login = () => {
-    AppStore.login(username, password)
+  const login = async () => {
+    try {
+      await AppStore.login(username, password)
+    } catch (e) {
+      setErrorData(e as ApiError)
+    }
   }
 
   return (
