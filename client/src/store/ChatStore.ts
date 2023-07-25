@@ -6,31 +6,31 @@ import IUser from "../types/user"
 import ApiError from "../types/api/apiError"
 
 class ChatStore {
-  id: string | null = null
-  chats: string[] = []
+  currentChat: IChat | null = null
+  // chats: IChat[] = [] // chats that have already been loaded
   
   constructor() {
     makeAutoObservable(this)
   }
 
-  setId(id: string | null) {
-    this.id = id
+  setCurrentChat(id: IChat | null) {
+    this.currentChat = id
   }
-  setChats(chats: string[] | undefined) {
-    this.chats = chats || []
-  }
+  // setChats(chats: IChat[] | undefined) {
+  //   this.chats = chats || []
+  // }
 
-  async findChatById(chatId: string): Promise<IChat> {
+  async findChatById(chatId: string) {
     try {
-      return (await $api.get(`${API_URL}/chat/${chatId}`)).data
+      return (await $api.get<IChat>(`${API_URL}/chat/${chatId}`)).data
     } catch (e) {
       throw (e as AxiosError<ApiError>).response?.data
     }
   }
 
-  async findUserById(uid: string): Promise<IUser> {
+  async findUserById(uid: string) {
     try {
-      return (await $api.get(`${API_URL}/user/${uid}`)).data
+      return (await $api.get<IUser>(`${API_URL}/user/${uid}`)).data
     } catch (e) {
       throw (e as AxiosError<ApiError>).response?.data
     }
@@ -50,9 +50,9 @@ class ChatStore {
     }
   }
 
-  async findChatWithUser(user: IUser): Promise<IChat> {
+  async findChatWithUser(user: IUser) {
     try {
-      return (await $api.get(`${API_URL}/chat/find/${user.uid}`)).data
+      return (await $api.get<IChat>(`${API_URL}/chat/find/${user.uid}`)).data
     } catch (e) {
       throw (e as AxiosError<ApiError>).response?.data
     }

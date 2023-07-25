@@ -4,7 +4,6 @@ import $api, { API_URL } from "../http"
 import ApiError from "../types/api/apiError"
 import UserData from "../types/api/userData"
 import IUser from "../types/user"
-import ChatStore from "./ChatStore"
 
 class AppStore {
   isAuth = false
@@ -42,7 +41,6 @@ class AppStore {
       localStorage.setItem('token', data.accessToken)
       this.setIsAuth(true)
       this.setUser(data.user)
-      ChatStore.setChats(data.user.chats)
     } catch (e) {
       throw (e as AxiosError<ApiError>).response?.data
     }
@@ -64,7 +62,6 @@ class AppStore {
       localStorage.setItem('token', data.accessToken)
       this.setIsAuth(true)
       this.setUser(data.user)
-      ChatStore.setChats(data.user.chats)
     } catch (e) {
       throw (e as AxiosError<ApiError>).response?.data
     } finally {

@@ -1,13 +1,12 @@
-import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 import { useEffect, useState } from 'react'
 import AppStore from '../../../store/AppStore'
 import ChatStore from '../../../store/ChatStore'
 import IChat from '../../../types/chat'
+import IUser from '../../../types/user'
 import getMessageTime from '../../../utils/getMessageTime'
 import UserIcon from '../../UI/UserIcon'
 import cl from './Chat.module.css'
-import IUser from '../../../types/user'
 
 interface ChatProps {
   chatId: string,
@@ -18,12 +17,12 @@ const Chat = ({chatId, chatData}: ChatProps) => {
   const [chat, setChat] = useState<IChat | null>(chatData ? chatData : null)
   const [member, setMember] = useState<IUser | null>(null)
   
-  const appStoreUser = toJS(AppStore.user)
+  const user = AppStore.user
 
   useEffect(() => {
     const findMember = async (chat: IChat) => {
       setMember(await ChatStore.findUserById(
-        chat.members[0] !== appStoreUser.uid
+        chat.members[0] !== user.uid
         ? chat.members[0]
         : chat.members[1]
       ))
@@ -46,8 +45,8 @@ const Chat = ({chatId, chatData}: ChatProps) => {
   const title = chat.isGroup ? chat.name : member?.username
   
   return (
-    <div onClick={() => ChatStore.setId(chatId)}
-      className={cl.chat + ' ' + (ChatStore.id === chatId ? cl.chatChosen : '')}>
+    <div onClick={() => ChatStore.setCurrentChat(chat)}
+      className={cl.chat + ' ' + (ChatStore.currentChat?.id === chatId ? cl.chatChosen : '')}>
       <div className={cl.chat__left}>
         {/* {photo ?
 

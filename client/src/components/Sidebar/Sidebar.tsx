@@ -1,17 +1,16 @@
-import { toJS } from 'mobx'
+import { observer } from 'mobx-react-lite'
 import { useEffect, useState } from 'react'
 import { AiOutlineSearch } from 'react-icons/ai'
 import { BiFilter } from 'react-icons/bi'
 import { GoKebabVertical } from 'react-icons/go'
 import { VscClose } from 'react-icons/vsc'
+import AppStore from '../../store/AppStore'
 import ChatStore from '../../store/ChatStore'
 import IChat from '../../types/chat'
 import UserIcon from '../UI/UserIcon'
 import Chat from './Chat/Chat'
-import cl from './Sideabr.module.css'
 import Profile from './Profile/Profile'
-import { observer } from 'mobx-react-lite'
-import AppStore from '../../store/AppStore'
+import cl from './Sideabr.module.css'
 
 const Sidebar = () => {
   const {user} = AppStore
@@ -82,7 +81,7 @@ const Sidebar = () => {
 
         <div className={cl.sidebar__scroll}>
           <div className={`${cl.sidebar__chats} ${(userChat || searchChats) && cl.hidden}`}>
-            {toJS(ChatStore.chats).map(chatId =>
+            {user.chats?.map(chatId =>
               <Chat chatId={chatId} key={chatId} />
             )}
           </div>

@@ -3,9 +3,10 @@ import { observer } from 'mobx-react-lite'
 import ChatStore from '../../store/ChatStore'
 
 const Main = () => {
+  const chat = ChatStore.currentChat
   return (
     <main className={cl.main}>
-      {!ChatStore.id ?
+      {!chat ?
         <div className={cl.intro}>
           <div className={cl.intro__content}>
             <div className={cl.intro__svg}>
@@ -16,9 +17,9 @@ const Main = () => {
         </div>
       :
         <div className={cl.main__chat}>
-          <header className={cl.main__header + " header"}></header>
+          <header className={cl.main__header + " header"}>{}</header>
 
-          <div className={cl.main__conv}>{ChatStore.id}</div>
+          <div className={cl.main__conv}>{chat.id}</div>
 
           <footer className={cl.main__footer}></footer>
         </div>
