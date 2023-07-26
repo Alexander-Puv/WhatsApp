@@ -1,9 +1,14 @@
 import cl from './Main.module.css'
 import { observer } from 'mobx-react-lite'
 import ChatStore from '../../store/ChatStore'
+import UserIcon from '../UI/UserIcon'
+import { AiOutlineSearch } from 'react-icons/ai'
+import { GoKebabVertical } from 'react-icons/go'
 
 const Main = () => {
   const chat = ChatStore.currentChat
+  const member = ChatStore.member
+
   return (
     <main className={cl.main}>
       {!chat ?
@@ -17,7 +22,24 @@ const Main = () => {
         </div>
       :
         <div className={cl.main__chat}>
-          <header className={cl.main__header + " header"}>{}</header>
+          <header className={`${cl.main__header} header`}>
+            <div className={cl.main__headerLeft}>
+              {(chat.isGroup && chat?.photo) || member?.photo ?
+                <img src={(chat.isGroup && chat?.photo) || member?.photo} />
+              :
+                <UserIcon />
+              }
+              {chat.isGroup ? chat.name : member?.username}
+            </div>
+            <div className={cl.main__headerRight}>
+              <div className={cl.main__headerIcon + " svg-parent"}>
+                <AiOutlineSearch />
+              </div>
+              <div className={cl.main__headerIcon + " svg-parent"}>
+                <GoKebabVertical />
+              </div>
+            </div>
+          </header>
 
           <div className={cl.main__conv}>{chat.id}</div>
 

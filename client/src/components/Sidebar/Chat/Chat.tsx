@@ -43,16 +43,21 @@ const Chat = ({chatId, chatData}: ChatProps) => {
   const time = getMessageTime(new Date(chat.createdAt))
   const photo = chat.isGroup ? chat.photo : member?.photo
   const title = chat.isGroup ? chat.name : member?.username
+
+  const clickHandler = () => {
+    ChatStore.setCurrentChat(chat)
+    ChatStore.setMember(member)
+  }
   
   return (
-    <div onClick={() => ChatStore.setCurrentChat(chat)}
+    <div onClick={clickHandler}
       className={cl.chat + ' ' + (ChatStore.currentChat?.id === chatId ? cl.chatChosen : '')}>
       <div className={cl.chat__left}>
-        {/* {photo ?
-
-        : */}
+        {photo ?
+          <img src={photo} />
+        :
           <UserIcon />
-        {/* } */}
+        }
       </div>
       <div className={cl.chat__right}>
         <div className={cl.chat__main}>

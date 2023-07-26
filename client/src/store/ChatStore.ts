@@ -7,14 +7,18 @@ import ApiError from "../types/api/apiError"
 
 class ChatStore {
   currentChat: IChat | null = null
+  member: IUser | null = null
   // chats: IChat[] = [] // chats that have already been loaded
   
   constructor() {
     makeAutoObservable(this)
   }
 
-  setCurrentChat(id: IChat | null) {
-    this.currentChat = id
+  setCurrentChat(chat: IChat | null) {
+    this.currentChat = chat
+  }
+  setMember(member: IUser | null) {
+    this.member = member
   }
   // setChats(chats: IChat[] | undefined) {
   //   this.chats = chats || []
