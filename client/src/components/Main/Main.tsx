@@ -2,8 +2,10 @@ import cl from './Main.module.css'
 import { observer } from 'mobx-react-lite'
 import ChatStore from '../../store/ChatStore'
 import UserIcon from '../UI/UserIcon'
-import { AiOutlineSearch } from 'react-icons/ai'
+import { AiOutlineSearch, AiOutlinePlus } from 'react-icons/ai'
 import { GoKebabVertical } from 'react-icons/go'
+import { BsFillEmojiSmileFill } from 'react-icons/bs'
+import { MdKeyboardVoice } from 'react-icons/md'
 
 const Main = () => {
   const chat = ChatStore.currentChat
@@ -32,10 +34,10 @@ const Main = () => {
               {chat.isGroup ? chat.name : member?.username}
             </div>
             <div className={cl.main__headerRight}>
-              <div className={cl.main__headerIcon + " svg-parent"}>
+              <div className="svg-parent svg-parent_active">
                 <AiOutlineSearch />
               </div>
-              <div className={cl.main__headerIcon + " svg-parent"}>
+              <div className="svg-parent svg-parent_active">
                 <GoKebabVertical />
               </div>
             </div>
@@ -43,7 +45,22 @@ const Main = () => {
 
           <div className={cl.main__conv}>{chat.id}</div>
 
-          <footer className={cl.main__footer}></footer>
+          <footer className={cl.main__footer}>
+            <div className={cl.main__footerLeft}>
+              <div className="svg-parent svg-parent_active">
+                <BsFillEmojiSmileFill />
+              </div>
+              <div className="svg-parent svg-parent_active">
+                <AiOutlinePlus />
+              </div>
+            </div>
+            <div className={cl.main__footerInput}>
+              <div></div>
+            </div>
+            <div className={cl.main__footerRight + " svg-parent"}>
+              <MdKeyboardVoice />
+            </div>
+          </footer>
         </div>
       }
     </main>

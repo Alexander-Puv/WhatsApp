@@ -1,6 +1,5 @@
-import { toJS } from 'mobx';
 import { observer } from 'mobx-react-lite';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { AiOutlineCheck } from 'react-icons/ai';
 import { BsArrowLeft, BsPencilFill } from 'react-icons/bs';
 import AppStore from '../../../store/AppStore';
@@ -33,7 +32,7 @@ const Profile = ({profileOpen, setProfileOpen}: ProfileProps) => {
     <div className={`${cl.profile} ${profileOpen && cl.open}`}>
       <div className={cl.profile_back}>
         <div>
-          <div className="svg-parent hover" onClick={() => setProfileOpen(false)}>
+          <div className="svg-parent svg-parent_hover" onClick={() => setProfileOpen(false)}>
             <BsArrowLeft />
           </div>
           <h2>Profile</h2>
@@ -58,13 +57,13 @@ const Profile = ({profileOpen, setProfileOpen}: ProfileProps) => {
           <div className={cl.profile__changeDesc}>
             {!changeDesc ? <>
               <p>{description}</p>
-              <div className="svg-parent hover" onClick={() => setChangeDesc(true)}>
+              <div className="svg-parent svg-parent_hover" onClick={() => setChangeDesc(true)}>
                 <BsPencilFill />
               </div>
             </>:<>
               <textarea maxLength={200} onKeyDown={e => e.code === 'Enter' && e.preventDefault()}
                 value={description} onChange={e => setDescription(e.target.value)} />
-                <div className="svg-parent hover" onClick={changeDescription}>
+                <div className="svg-parent svg-parent_hover" onClick={changeDescription}>
                   <AiOutlineCheck />
                 </div>
             </>}

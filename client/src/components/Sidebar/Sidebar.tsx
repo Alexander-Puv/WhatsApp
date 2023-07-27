@@ -52,7 +52,7 @@ const Sidebar = () => {
           }
         </div>
         <div className={cl.icons}>
-          <button className="svg-parent">
+          <button className="svg-parent svg-parent_active">
             <GoKebabVertical />
           </button>
         </div>

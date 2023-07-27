@@ -117,11 +117,22 @@ body {
   fill: var(--secondary-text);
   transition: .15s ease;
 }
-.svg-parent.hover {
+.svg-parent_hover {
   cursor: pointer;
 }
-.svg-parent.hover>svg:hover {
+.svg-parent_hover>svg:hover {
   fill: var(--primary-text);
+}
+.svg-parent_active {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  user-select: none;
+  cursor: pointer;
+  transition: .3s ease;
+}
+.svg-parent_active:active {
+  background-color: var(--scrollbar-thumb);
 }
 
 .user-icon {
