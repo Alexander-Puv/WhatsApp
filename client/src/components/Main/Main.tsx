@@ -6,10 +6,28 @@ import { AiOutlineSearch, AiOutlinePlus } from 'react-icons/ai'
 import { GoKebabVertical } from 'react-icons/go'
 import { BsFillEmojiSmileFill } from 'react-icons/bs'
 import { MdKeyboardVoice } from 'react-icons/md'
+import { useState, useRef } from 'react'
 
 const Main = () => {
+  const [message, setMessage] = useState('')
+  const inputRef = useRef<HTMLDivElement>(null);
   const chat = ChatStore.currentChat
   const member = ChatStore.member
+
+  const handleInputChange = () => {
+    if (inputRef.current) {
+      setMessage(inputRef.current.textContent || '')
+    }
+  }
+
+  const handleClick = () => {
+    if (inputRef.current && inputRef.current.contains(document.activeElement)) {
+      return
+    }
+    if (inputRef.current) {
+      inputRef.current.focus()
+    }
+  }
 
   return (
     <main className={cl.main}>
@@ -54,8 +72,13 @@ const Main = () => {
                 <AiOutlinePlus />
               </div>
             </div>
-            <div className={cl.main__footerInput}>
-              <div></div>
+            <div className={cl.main__footerInput} onClick={handleClick}>
+              {!message && <span>Write a message...</span>}
+              <div 
+                ref={inputRef}
+                contentEditable={true}
+                onInput={handleInputChange}
+              />
             </div>
             <div className={cl.main__footerRight + " svg-parent"}>
               <MdKeyboardVoice />

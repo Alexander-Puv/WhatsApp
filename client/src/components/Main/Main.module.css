@@ -89,14 +89,26 @@
 }
 
 .main__footerInput {
+  position: relative;
+  min-height: 42px;
+  max-height: 293px;
   flex: 1;
-  padding: 10px 13px;
   margin: 5px 8px;
   border-radius: 8px;
   background-color: var(--chosen-chat);
+  overflow-y: auto;
+}
+.main__footerInput>span {
+  position: absolute;
+  padding: 10px 13px;
+  color: var(--secondary-text);
 }
 .main__footerInput>div {
-  min-height: 22px;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  padding: 10px 13px;
+  outline: none;
 }
 
 .main__footerRight {
