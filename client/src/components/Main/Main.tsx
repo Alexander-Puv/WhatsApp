@@ -1,12 +1,12 @@
-import cl from './Main.module.css'
 import { observer } from 'mobx-react-lite'
+import { useRef, useState } from 'react'
+import { AiOutlinePlus, AiOutlineSearch } from 'react-icons/ai'
+import { BsFillEmojiSmileFill } from 'react-icons/bs'
+import { GoKebabVertical } from 'react-icons/go'
+import { MdKeyboardVoice } from 'react-icons/md'
 import ChatStore from '../../store/ChatStore'
 import UserIcon from '../UI/UserIcon'
-import { AiOutlineSearch, AiOutlinePlus } from 'react-icons/ai'
-import { GoKebabVertical } from 'react-icons/go'
-import { BsFillEmojiSmileFill } from 'react-icons/bs'
-import { MdKeyboardVoice } from 'react-icons/md'
-import { useState, useRef } from 'react'
+import cl from './Main.module.css'
 
 const Main = () => {
   const [message, setMessage] = useState('')
@@ -81,7 +81,11 @@ const Main = () => {
               />
             </div>
             <div className={cl.main__footerRight + " svg-parent"}>
-              <MdKeyboardVoice />
+              {message ?
+                <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 12C22 11.5008 2.00002 1.51911 2.00002 2.0181C2.00002 2.44571 4.5 9.5 5 10C5.5 10.5 11 11 11 11.5C11 12 5.5 12.5 5 13C4.5 13.5 2 21.4829 2.00002 21.9819C2.00005 22.4809 22 12.4992 22 12Z"/></svg>                
+              :
+                <MdKeyboardVoice />
+              }
             </div>
           </footer>
         </div>
