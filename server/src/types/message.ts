@@ -1,16 +1,24 @@
 import { Document, Types } from "mongoose";
 
 export default interface IMsg {
-  // event: EventType, // no?
   createdAt: Date,
   senderId: string,
   content?: string,
   // isRead: boolean
 }
-// export type EventType = 'connection-to-group' | 'message' | 'first-message'
 
-export interface IMsgModel extends Document {
-  content: string,
-  senderId: Types.ObjectId,
-  createdAt: Date
+export interface IChatMsgs {
+  createdAt: Date,
+  senderId: string,
+  content?: string,
+  // isRead: boolean
+}
+
+export interface IChatMsgsModel extends Document {
+  messages: {
+    content: string,
+    senderId: Types.ObjectId,
+    createdAt: Date
+    // isRead: boolean
+  }[]
 }
