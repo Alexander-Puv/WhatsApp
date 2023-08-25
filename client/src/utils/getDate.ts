@@ -9,17 +9,12 @@ const weekDays = [
 ]
 
 export const getMessageTime = (date: Date) => {
-  const month = date.getMonth() + 1
   return date.getDate() === new Date().getDate()
     ? `${date.getHours()}:${date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes()}`
     : date.getDate() === new Date().getDate() - 1 ? 'Вчера'
     : new Date().getDate() - date.getDate() < 7
     ? weekDays[date.getDay()]
-    : `${date.getDate()}.${
-        month < 10 ?
-          `0${month}`
-          : month
-      }.${date.getFullYear()}`
+    : `${getDate(date)}.${date.getFullYear()}`
 }
 
 export const getDate = (date: Date) => {
