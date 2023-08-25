@@ -14,7 +14,7 @@ export const getMessageTime = (date: Date) => {
     : date.getDate() === new Date().getDate() - 1 ? 'Вчера'
     : new Date().getDate() - date.getDate() < 7
     ? weekDays[date.getDay()]
-    : `${getDate(date)}.${date.getFullYear()}`
+    : getDate(date)
 }
 
 export const getDate = (date: Date) => {
