@@ -4,7 +4,7 @@ import AppStore from '../../../store/AppStore'
 import ChatStore from '../../../store/ChatStore'
 import IChat from '../../../types/chat'
 import IUser from '../../../types/user'
-import getMessageTime from '../../../utils/getMessageTime'
+import { getMessageTime } from '../../../utils/getDate'
 import UserIcon from '../../UI/UserIcon'
 import cl from './Chat.module.css'
 

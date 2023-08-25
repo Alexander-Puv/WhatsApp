@@ -3,7 +3,7 @@ import React, { useRef, useState } from 'react';
 import { AiOutlineCheck } from 'react-icons/ai';
 import { BsArrowLeft, BsPencilFill } from 'react-icons/bs';
 import AppStore from '../../../store/AppStore';
-import { getDate } from '../../../utils/getMessageTime';
+import { getDate } from '../../../utils/getDate';
 import UserIcon from '../../UI/UserIcon';
 import cl from './Profile.module.css';
 
