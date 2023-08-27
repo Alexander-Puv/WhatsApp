@@ -9,61 +9,62 @@
   background-color: $incoming-bg;
   border-radius: 3px;
   box-shadow: 0 17px 50px 0 rgba(11,20,26,.19), 0 12px 15px 0 rgba(11,20,26,.24);
-}
 
-.login__input {
-  margin-bottom: 10px;
-  padding: 24px 0 10px;
-  display: flex;
-  flex-direction: column;
-}
+  .login__input {
+    margin-bottom: 10px;
+    padding: 24px 0 10px;
+    display: flex;
+    flex-direction: column;
 
-.login__input span {
-  margin-bottom: 14px;
-  color: $light-green;
-}
+    span {
+      margin-bottom: 14px;
+      color: $light-green;
+    }
 
-.login__input input {
-  padding: 8px 0 5px;
-  font-size: 1.0625rem;
-  border-bottom: 2px solid $dark-text;
-}
-.login__input input:focus-within {
-  border-bottom: 2px solid $light-green;
-}
+    input {
+      padding: 8px 0 5px;
+      font-size: 1.0625rem;
+      border-bottom: 2px solid $dark-text;
+      &:focus-within {
+        border-bottom: 2px solid $light-green;
+      }
+    }
+  }
 
-.login__error {
-  margin: 15px 0;
-  display: flex;
-  flex-direction: column;
-  color: $red;
-}
-.login__error>div {
-  margin-top: 10px;
-  padding-left: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
+  .login__error {
+    margin: 15px 0;
+    display: flex;
+    flex-direction: column;
+    color: $red;
 
-.login_footer {
-  margin: 20px 0;
-  display: flex;
-  flex-direction: row-reverse;
-  align-items: center;
-  justify-content: space-between;
-}
+    div {
+      margin-top: 10px;
+      padding-left: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+  }
 
-.login__button {
-  padding: 10px 50px;
-  background-color: $light-green;
-  font-size: 1.125rem;
-  color: #fff;
-  transition: .25s ease;
-}
-.login__button:hover {
-  background-color: $dark-green;
-  color: $primary-text;
+  .login_footer {
+    margin: 20px 0;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: space-between;
+
+    .login__button {
+      padding: 10px 50px;
+      background-color: $light-green;
+      font-size: 1.125rem;
+      color: #fff;
+      transition: .25s ease;
+      &:hover {
+        background-color: $dark-green;
+        color: $primary-text;
+      }
+    }
+  }
 }
 
 @media (max-width: 1095px) {
