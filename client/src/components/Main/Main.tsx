@@ -6,7 +6,7 @@ import { GoKebabVertical } from 'react-icons/go'
 import { MdKeyboardVoice } from 'react-icons/md'
 import ChatStore from '../../store/ChatStore'
 import UserIcon from '../UI/UserIcon'
-import cl from './Main.module.css'
+import cl from './Main.module.scss'
 
 const Main = () => {
   const [message, setMessage] = useState('')

@@ -1,14 +1,14 @@
-import './App.css'
-import Sidebar from './components/Sidebar/Sidebar'
-import Main from './components/Main/Main'
-import Login from './components/Login/Login'
 import { observer } from 'mobx-react-lite'
-import AppStore from './store/AppStore'
 import { useEffect } from 'react'
+import { connect } from 'socket.io-client'
+import './App.scss'
 import Loader from './components/Loader/Loader'
-import {connect} from 'socket.io-client';
-import ChatStore from './store/ChatStore'
+import Login from './components/Login/Login'
+import Main from './components/Main/Main'
+import Sidebar from './components/Sidebar/Sidebar'
 import { ROOT_URL } from './http'
+import AppStore from './store/AppStore'
+import { toJS } from 'mobx'
 
 function App() {
   useEffect(() => {
@@ -19,7 +19,13 @@ function App() {
     });
 
     socket.on('newChat', chat => {
-      ChatStore.setChats([...ChatStore.chats, chat])
+      const user = toJS(AppStore.user)
+      AppStore.setUser({
+        ...user,
+        chats: user.chats
+          ? [...user.chats, chat]
+          : [chat]
+      })
     })
 
     if (localStorage.getItem('token')) {

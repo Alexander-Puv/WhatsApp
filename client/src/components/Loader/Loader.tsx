@@ -1,5 +1,4 @@
-import React from 'react'
-import cl from './Loader.module.css'
+import cl from './Loader.module.scss'
 
 const Loader = () => {
   return (

@@ -10,7 +10,7 @@ import IChat from '../../types/chat'
 import UserIcon from '../UI/UserIcon'
 import Chat from './Chat/Chat'
 import Profile from './Profile/Profile'
-import cl from './Sideabr.module.css'
+import cl from './Sideabr.module.scss'
 
 const Sidebar = () => {
   const {user} = AppStore

@@ -1,27 +1,9 @@
+@import './variables.scss';
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
-
-:root {
-  --app-bg: #111b21;
-  --incoming-bg: #202c33; /* incoming msg, header, search input, footer */
-  --chosen-chat: #2a3942; /* chosen chat, send message input,  */
-  --dark-green: #005c4b; /* outgoing msg */
-  --light-green: #00a884; /* unread msg, login */
-  --blue: #53bdeb;
-  --red: #ca1515;
-
-  --primary-text: #d1d7db;
-  --secondary-text: #8696a0; /* sidebar read msg, date, icons */
-  --message-text: #e9edef;
-  --dark-text: #3b4a54;
-  --header-icon-color: #aebac1;
-
-  --underline-color: #8696a026;
-  --scrollbar-thumb: #d1d7db29;
-  --shadow-color: #0b141a66;
 }
 
 ::-webkit-scrollbar {
@@ -29,14 +11,14 @@
   height: 6px !important;
 }
 ::-webkit-scrollbar-thumb {
-  background-color: var(--scrollbar-thumb);
+  background-color: $scrollbar-thumb;
 }
 ::-webkit-scrollbar-track {
   background-color: initial;
 }
 
 input, button {
-  color: var(--primary-text);
+  color: $primary-text;
   background-color: transparent;
   outline: none;
   border: none;
@@ -56,14 +38,14 @@ textarea {
   font-size: 16px;
   font-weight: 350;
   font-family: Segoe UI,Helvetica Neue,Helvetica,Lucida Grande,Arial,Ubuntu,Cantarell,Fira Sans,sans-serif;
-  color: var(--primary-text);
+  color: $primary-text;
   border: 0;
 }
 
 body {
-  background-color: var(--app-bg);
+  background-color: $app-bg;
   font-family: Segoe UI,Helvetica Neue,Helvetica,Lucida Grande,Arial,Ubuntu,Cantarell,Fira Sans,sans-serif;
-  color: var(--primary-text);
+  color: $primary-text;
   overflow: hidden;
 }
 
@@ -90,14 +72,14 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: var(--incoming-bg);
+  background-color: $incoming-bg;
 }
 .header svg {
-  fill: var(--header-icon-color) !important;
+  fill: $header-icon-color !important;
 }
 
 .link {
-  color: var(--blue);
+  color: $blue;
   cursor: pointer;
   opacity: 1;
   transition: .25s ease;
@@ -114,14 +96,14 @@ body {
 .svg-parent>svg {
   width: 24px;
   height: 24px;
-  fill: var(--secondary-text);
+  fill: $secondary-text;
   transition: .15s ease;
 }
 .svg-parent_hover {
   cursor: pointer;
 }
 .svg-parent_hover>svg:hover {
-  fill: var(--primary-text);
+  fill: $primary-text;
 }
 .svg-parent_active {
   width: 40px;
@@ -132,15 +114,15 @@ body {
   transition: .3s ease;
 }
 .svg-parent_active:active {
-  background-color: var(--scrollbar-thumb);
+  background-color: $scrollbar-thumb;
 }
 
 .user-icon {
   width: 40px;
   height: 40px;
   padding: 6px;
-  background-color: var(--dark-text);
-  box-shadow: 0 1px 3px var(--shadow-color);
+  background-color: $dark-text;
+  box-shadow: 0 1px 3px $shadow-color;
   border-radius: 50%;
 }
 .user-icon svg {

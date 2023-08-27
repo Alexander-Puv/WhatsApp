@@ -1,3 +1,5 @@
+@import '../../../variables.scss';
+
 .profile {
   position: absolute;
   width: 100%;
@@ -5,7 +7,7 @@
   transform: translateX(-100%);
   opacity: 0;
   padding: 80px 40px;
-  background-color: var(--app-bg);
+  background-color: $app-bg;
   z-index: 10;
   transition: .5s ease;
 }
@@ -22,7 +24,7 @@
   right: 0;
   height: 120px;
   padding: 40px 20px 0;
-  background-color: var(--incoming-bg);
+  background-color: $incoming-bg;
   z-index: 0;
 }
 .profile_back>div {
@@ -87,7 +89,7 @@
 
 .profile__date {
   font-weight: 300;
-  color: var(--secondary-text)
+  color: $secondary-text;
 }
 
 /* user description */
@@ -124,6 +126,6 @@
   word-break: break-word;
 }
 .profile__changeDesc textarea {
-  border: 1px solid var(--primary-text);
+  border: 1px solid $primary-text;
   border-radius: 4px;
 }

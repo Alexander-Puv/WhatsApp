@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite'
 import { useState } from 'react'
-import cl from './Login.module.css'
+import cl from './Login.module.scss'
 import AppStore from '../../store/AppStore'
 import ApiError from '../../types/api/apiError'
 

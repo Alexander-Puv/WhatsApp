@@ -5,7 +5,7 @@ import { BsArrowLeft, BsPencilFill } from 'react-icons/bs';
 import AppStore from '../../../store/AppStore';
 import { getDate } from '../../../utils/getDate';
 import UserIcon from '../../UI/UserIcon';
-import cl from './Profile.module.css';
+import cl from './Profile.module.scss';
 
 interface ProfileProps {
   profileOpen: boolean,

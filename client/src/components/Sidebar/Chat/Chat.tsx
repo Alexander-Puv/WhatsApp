@@ -6,7 +6,7 @@ import IChat from '../../../types/chat'
 import IUser from '../../../types/user'
 import { getMessageTime } from '../../../utils/getDate'
 import UserIcon from '../../UI/UserIcon'
-import cl from './Chat.module.css'
+import cl from './Chat.module.scss'
 
 interface ChatProps {
   chatId: string,
