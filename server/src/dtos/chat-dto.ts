@@ -1,4 +1,3 @@
-import { Types } from "mongoose"
 import { IChatModel } from "../types/chat"
 import IMsg from "../types/message"
 
@@ -14,13 +13,14 @@ export default class ChatDto {
   isDeleted?: boolean
 
   constructor(model: IChatModel) {
-    this.id = model.id
+    this.id = model._id
     this.createdAt = new Date(model.createdAt)
     this.members = model.members
     this.messages = model.messages.map((msg) => ({
-      content: msg.content,
+      ...msg,
+      id: msg._id,
       senderId: msg.senderId.toString(),
-      createdAt: msg.createdAt,
+      chatId: msg.chatId.toString()
     }));
     this.isGroup = model.isGroup
     this.name = model.name

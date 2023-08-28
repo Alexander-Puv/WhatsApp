@@ -4,6 +4,7 @@ import chatController from '../controllers/chat-controller'
 import profileController from '../controllers/profile-controller'
 import userController from '../controllers/user-controller'
 import validator from './validator'
+import messageController from '../controllers/message-controller'
 
 const router = express.Router()
 
@@ -28,6 +29,11 @@ router.put('/chat/group/:id/description', chatController.description)
 router.delete('/chat/:id', chatController.deleteChat) // delete for one user
 router.delete('/chat/group/:id', chatController.deleteGroup)
 router.delete('/chat/group/:id/leave', chatController.leaveGroup)
+
+// messages
+router.post('/message', messageController.send)
+
+router.get('/message/:id', messageController.findById)
 
 // users
 router.get('/user', userController.findUserByUsername)
