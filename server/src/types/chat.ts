@@ -7,13 +7,13 @@ type IChat = { // if chat
   id: string,
   createdAt: Date,
   members: string[],
-  messages: IMsg[],
+  messages: string[],
 } | { // if group
   isGroup: true,
   id: string,
   createdAt: Date,
   members: string[],
-  messages: IMsg[],
+  messages: string[],
   name: string,
   photo?: string,
   description?: string,
@@ -25,7 +25,7 @@ export default IChat
 export interface IChatModel extends Document {
   members: Types.Array<IUserModel['_id']>,
   createdAt: Date,
-  messages: IMsgModel[],
+  messages: Types.Array<IMsgModel['_id']>,
   // if group
   isGroup: boolean,
   name?: string,
