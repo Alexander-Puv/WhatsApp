@@ -7,6 +7,7 @@ import IUser from '../../../types/user'
 import { getMessageTime } from '../../../utils/getDate'
 import UserIcon from '../../UI/UserIcon'
 import cl from './Chat.module.scss'
+import IMsg from '../../../types/message'
 
 interface ChatProps {
   chatId: string,
@@ -47,6 +48,12 @@ const Chat = ({chatId, chatData}: ChatProps) => {
   const clickHandler = () => {
     ChatStore.setCurrentChat(chat)
     ChatStore.setMember(member)
+
+    chat.messages.map((msg, i) =>
+      // we upload only first 25 messages when a user chooses a chat
+      i !== 25 && typeof msg == 'string'
+        && ChatStore.findMsgById(msg)
+    )
   }
   
   return (
@@ -67,7 +74,7 @@ const Chat = ({chatId, chatData}: ChatProps) => {
           <div className={cl.chat__time}>{time}</div>
         </div>
         <div className={cl.chat__lastMessage}>
-          <span>{chat.messages[chat.messages.length - 1]?.content || 'No messages here'}</span>
+          <span>{(chat.messages as IMsg[])[chat.messages.length - 1]?.content || 'No messages here'}</span>
         </div>
       </div>
     </div>
