@@ -4,11 +4,11 @@ import $api, { API_URL } from "../http"
 import IChat from "../types/chat"
 import IUser from "../types/user"
 import ApiError from "../types/api/apiError"
+import IMsg from "../types/message"
 
 class ChatStore {
   currentChat: IChat | null = null
   member: IUser | null = null
-  // chats: IChat[] = [] // chats that have already been loaded
   
   constructor() {
     makeAutoObservable(this)
@@ -20,9 +20,8 @@ class ChatStore {
   setMember(member: IUser | null) {
     this.member = member
   }
-  // setChats(chats: IChat[] | undefined) {
-  //   this.chats = chats || []
-  // }
+
+  // find chats
 
   async findChatById(chatId: string) {
     try {
@@ -57,6 +56,29 @@ class ChatStore {
   async findChatWithUser(user: IUser) {
     try {
       return (await $api.get<IChat>(`${API_URL}/chat/find/${user.uid}`)).data
+    } catch (e) {
+      throw (e as AxiosError<ApiError>).response?.data
+    }
+  }
+
+  // messages
+
+  async sendMsg(content: string, chatId: string) {
+    try {
+      const {data} = await $api.post<IMsg>(`${API_URL}/message`, {content, chatId})
+      this.currentChat?.messages.push(data)
+      return data
+    } catch (e) {
+      throw (e as AxiosError<ApiError>).response?.data
+    }
+  }
+
+  async findMsgById(id: string) {
+    try {
+      const {data} = await $api.get<IMsg>(`${API_URL}/message/${id}`)
+      const index = this.currentChat?.messages.indexOf(data.id) as number
+      this.currentChat?.messages.splice(index, 1, data)
+      return data
     } catch (e) {
       throw (e as AxiosError<ApiError>).response?.data
     }

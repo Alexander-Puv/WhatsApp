@@ -1,0 +1,24 @@
+@import '../../../variables.scss';
+
+.messageContainer {
+  display: flex;
+  width: 100%;
+  margin-bottom: 12px;
+  padding: 63px;
+  &.sameUser {
+    margin-bottom: 2px;
+  }
+
+  .message {
+    align-self: flex-start;
+    background-color: $incoming-bg;
+  }
+
+  &.me {
+    background-color: $dark-green;
+
+    .message {
+      align-self: flex-end;
+    }
+  }
+}
