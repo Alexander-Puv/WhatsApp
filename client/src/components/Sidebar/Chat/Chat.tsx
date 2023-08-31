@@ -17,6 +17,7 @@ interface ChatProps {
 const Chat = ({chatId, chatData}: ChatProps) => {
   const [chat, setChat] = useState<IChat | null>(chatData ? chatData : null)
   const [member, setMember] = useState<IUser | null>(null)
+  const [lastMsg, setLastMsg] = useState<IMsg | null>(null)
   
   const user = AppStore.user
 
@@ -33,6 +34,9 @@ const Chat = ({chatId, chatData}: ChatProps) => {
       const chat = await ChatStore.findChatById(chatId)
       setChat(chat)
       await findMember(chat)
+
+      const lastMsg = chat.messages[chat.messages.length - 1]
+      setLastMsg(typeof lastMsg === 'string' ? await ChatStore.findMsgById(lastMsg) : null)
     }
     
     !chatData && findChat()
@@ -49,7 +53,7 @@ const Chat = ({chatId, chatData}: ChatProps) => {
     ChatStore.setCurrentChat(chat)
     ChatStore.setMember(member)
 
-    chat.messages.map((msg, i) =>
+    chat.messages.slice().reverse().map((msg, i) =>
       // we upload only first 25 messages when a user chooses a chat
       i !== 25 && typeof msg == 'string'
         && ChatStore.findMsgById(msg)
@@ -74,7 +78,7 @@ const Chat = ({chatId, chatData}: ChatProps) => {
           <div className={cl.chat__time}>{time}</div>
         </div>
         <div className={cl.chat__lastMessage}>
-          <span>{(chat.messages as IMsg[])[chat.messages.length - 1]?.content || 'No messages here'}</span>
+          <span>{lastMsg?.content || 'No messages here'}</span>
         </div>
       </div>
     </div>
