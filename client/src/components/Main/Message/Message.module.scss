@@ -4,21 +4,92 @@
   display: flex;
   width: 100%;
   margin-bottom: 12px;
-  padding: 63px;
-  &.sameUser {
-    margin-bottom: 2px;
-  }
 
   .message {
-    align-self: flex-start;
+    position: relative;
+    padding: 6px 7px 8px 9px;
+    display: flex;
     background-color: $incoming-bg;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+    font-size: 14.2px;
+    line-height: 19px;
+    border-radius: 7.5px;
+    &.first {
+      border-radius: 0 7.5px 7.5px;
+    }
+
+    .tailOut {
+      position: absolute;
+      top: 0;
+      left: -8px;
+      width: 8px;
+      height: 13px;
+      scale: -1 1;
+      display: flex;
+
+      svg {
+        fill: $incoming-bg;
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .message__padding {
+      padding-right: 53px;
+    }
+
+    .message__right {
+      position: absolute;
+      bottom: 3px;
+      right: 8px;
+      display: flex;
+      font-size: .6875rem;
+      line-height: 15px;
+      color: $time-color;
+      
+      .message__time {
+        
+      }
+
+      .message__read {
+        width: 15px;
+        height: 15px;
+        margin-left: 3px;
+
+        svg {
+          width: 100%;
+          height: 100%;
+        }
+
+        &.message__read_true {
+          color: $blue;
+        }
+      }
+    }
   }
 
   &.me {
-    background-color: $dark-green;
 
     .message {
-      align-self: flex-end;
+      margin-left: auto;
+      background-color: $dark-green;
+      &.first {
+        border-radius: 7.5px 0 7.5px 7.5px;
+      }
+
+      .tailOut {
+        left: auto;
+        right: -8px;
+        scale: 1;
+        svg {
+          fill: $dark-green;
+        }
+      }
     }
+  }
+
+  &.sameUser {
+    margin-bottom: 2px;
   }
 }

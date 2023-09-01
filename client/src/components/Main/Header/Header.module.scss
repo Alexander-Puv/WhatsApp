@@ -1,0 +1,20 @@
+.header {
+  .header__left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    .header__img {
+      width: 40px;
+      height: 40px;
+      background-size: cover;
+      background-position: 50% 50%;
+      border-radius: 50%;
+    }
+  }
+
+  .header__right {
+    display: flex;
+    gap: 10px;
+  }
+}

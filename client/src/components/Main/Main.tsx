@@ -1,53 +1,19 @@
 import { observer } from 'mobx-react-lite'
-import { useRef, useState } from 'react'
-import { AiOutlinePlus, AiOutlineSearch } from 'react-icons/ai'
-import { BsFillEmojiSmileFill } from 'react-icons/bs'
+import { AiOutlineSearch } from 'react-icons/ai'
 import { GoKebabVertical } from 'react-icons/go'
-import { MdKeyboardVoice } from 'react-icons/md'
+import AppStore from '../../store/AppStore'
 import ChatStore from '../../store/ChatStore'
+import IMsg from '../../types/message'
 import UserIcon from '../UI/UserIcon'
+import Footer from './Footer/Footer'
 import cl from './Main.module.scss'
 import Message from './Message/Message'
-import AppStore from '../../store/AppStore'
-import { toJS } from 'mobx'
-import IMsg from '../../types/message'
+import Header from './Header/Header'
 
 const Main = () => {
-  const [message, setMessage] = useState('')
-  const inputRef = useRef<HTMLDivElement>(null);
   const user = AppStore.user
   const chat = ChatStore.currentChat
   const member = ChatStore.member
-  console.log(toJS(chat));
-  // console.log(chat?.messages[0].createdAt);
-
-  const handleInputChange = () => {
-    if (inputRef.current) {
-      setMessage(inputRef.current.textContent || '')
-    }
-  }
-
-  const handleClick = () => {
-    if (inputRef.current && inputRef.current.contains(document.activeElement)) {
-      return
-    }
-    if (inputRef.current) {
-      inputRef.current.focus()
-    }
-  }
-
-  const sendMessage = () => {
-    if (!message) {
-      voiceMessage()
-      return
-    }
-    
-    chat && ChatStore.sendMsg(message, chat.id)
-  }
-
-  const voiceMessage = () => {
-
-  }
 
   return (
     <main className={cl.main}>
@@ -62,57 +28,28 @@ const Main = () => {
         </div>
       :
         <div className={cl.main__chat}>
-          <header className={`${cl.main__header} header`}>
-            <div className={cl.main__headerLeft}>
-              {(chat.isGroup && chat?.photo) || member?.photo ?
-                <img src={(chat.isGroup && chat?.photo) || member?.photo} />
-              :
-                <UserIcon />
-              }
-              {chat.isGroup ? chat.name : member?.username}
-            </div>
-            <div className={cl.main__headerRight}>
-              <div className="svg-parent svg-parent_active">
-                <AiOutlineSearch />
-              </div>
-              <div className="svg-parent svg-parent_active">
-                <GoKebabVertical />
-              </div>
-            </div>
-          </header>
+          <Header />
 
           <div className={cl.main__conv}>
-            {chat.messages.map(msg =>
+            {chat.messages.map((msg, i) =>
               typeof msg !== 'string' &&
-                <Message content={msg.content} isMe={msg.senderId === user.uid} key={msg.createdAt.toString()} />
+                <Message
+                  msg={msg}
+                  isMe={msg.senderId === user.uid}
+                  first={chat.messages[i - 1]
+                    ? (chat.messages[i - 1] as IMsg).senderId !== msg.senderId
+                    : true
+                  }
+                  sameUser={chat.messages[i + 1]
+                    ? (chat.messages[i + 1] as IMsg).senderId === msg.senderId
+                    : false
+                  }
+                  key={msg.createdAt.toString()}
+                />
             )}
           </div>
 
-          <footer className={cl.main__footer}>
-            <div className={cl.main__footerLeft}>
-              <div className="svg-parent svg-parent_active">
-                <BsFillEmojiSmileFill />
-              </div>
-              <div className="svg-parent svg-parent_active">
-                <AiOutlinePlus />
-              </div>
-            </div>
-            <div className={cl.main__footerInput} onClick={handleClick}>
-              {!message && <span>Write a message...</span>}
-              <div 
-                ref={inputRef}
-                contentEditable={true}
-                onInput={handleInputChange}
-              />
-            </div>
-            <div className={cl.main__footerRight + " svg-parent"} onClick={sendMessage}>
-              {message ?
-                <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 12C22 11.5008 2.00002 1.51911 2.00002 2.0181C2.00002 2.44571 4.5 9.5 5 10C5.5 10.5 11 11 11 11.5C11 12 5.5 12.5 5 13C4.5 13.5 2 21.4829 2.00002 21.9819C2.00005 22.4809 22 12.4992 22 12Z"/></svg>                
-              :
-                <MdKeyboardVoice />
-              }
-            </div>
-          </footer>
+          <Footer />
         </div>
       }
     </main>

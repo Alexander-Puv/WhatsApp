@@ -1,6 +1,6 @@
 export default interface IMsg {
   id: string,
-  createdAt: Date,
+  createdAt: string,
   senderId: string,
   content: string,
   isRead: boolean,
