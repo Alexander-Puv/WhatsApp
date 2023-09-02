@@ -36,7 +36,7 @@ const Chat = ({chatId, chatData}: ChatProps) => {
       await findMember(chat)
 
       const lastMsg = chat.messages[chat.messages.length - 1]
-      setLastMsg(typeof lastMsg === 'string' ? await ChatStore.findMsgById(lastMsg) : null)
+      setLastMsg(typeof lastMsg === 'string' ? await ChatStore.findMsgById(lastMsg) : lastMsg)
     }
     
     !chatData && findChat()
@@ -45,7 +45,7 @@ const Chat = ({chatId, chatData}: ChatProps) => {
 
   if (!chat) return <></>
 
-  const time = getMessageTime(new Date(chat.createdAt))
+  const time = getMessageTime(new Date(lastMsg ? lastMsg.createdAt : chat.createdAt))
   const photo = chat.isGroup ? chat.photo : member?.photo
   const title = chat.isGroup ? chat.name : member?.username
 
