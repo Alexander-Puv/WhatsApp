@@ -1,4 +1,5 @@
 import IMsg from '../../../types/message'
+import { getMessageTime } from '../../../utils/getDate'
 import cl from './Message.module.scss'
 import { IoCheckmarkOutline, IoCheckmarkDone } from 'react-icons/io5'
 
@@ -10,8 +11,7 @@ interface MessageProps {
 }
 
 const Message = ({msg, isMe, first, sameUser}: MessageProps) => {
-  const date = new Date(msg.createdAt)
-  const time = `${date.getHours()}:${date.getMinutes()}`
+  const time = getMessageTime(new Date(msg.createdAt))
 
   return (
     <div className={`${

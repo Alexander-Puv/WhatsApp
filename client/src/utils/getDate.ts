@@ -9,6 +9,10 @@ const weekDays = [
 ]
 
 export const getMessageTime = (date: Date) => {
+  return `${date.getHours()}:${date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes()}`
+}
+
+export const getSidebarMessageTime = (date: Date) => {
   const isToday = (date.getDate() === new Date().getDate())
     && (date.getMonth() === new Date().getMonth())
     && (date.getFullYear() === new Date().getFullYear())

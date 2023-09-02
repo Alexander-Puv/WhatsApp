@@ -4,7 +4,7 @@ import AppStore from '../../../store/AppStore'
 import ChatStore from '../../../store/ChatStore'
 import IChat from '../../../types/chat'
 import IUser from '../../../types/user'
-import { getMessageTime } from '../../../utils/getDate'
+import { getSidebarMessageTime } from '../../../utils/getDate'
 import UserIcon from '../../UI/UserIcon'
 import cl from './Chat.module.scss'
 import IMsg from '../../../types/message'
@@ -45,7 +45,7 @@ const Chat = ({chatId, chatData}: ChatProps) => {
 
   if (!chat) return <></>
 
-  const time = getMessageTime(new Date(lastMsg ? lastMsg.createdAt : chat.createdAt))
+  const time = getSidebarMessageTime(new Date(lastMsg ? lastMsg.createdAt : chat.createdAt))
   const photo = chat.isGroup ? chat.photo : member?.photo
   const title = chat.isGroup ? chat.name : member?.username
 
