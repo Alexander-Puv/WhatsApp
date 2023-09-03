@@ -1,11 +1,11 @@
 const weekDays = [
-  'Воскресенье',
-  'Понедельник',
-  'Вторник',
-  'Среда',
-  'Четверг',
-  'Пятница',
-  'Суббота'
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday'
 ]
 
 export const getMessageTime = (date: Date) => {
@@ -13,15 +13,18 @@ export const getMessageTime = (date: Date) => {
 }
 
 export const getSidebarMessageTime = (date: Date) => {
-  const isToday = (date.getDate() === new Date().getDate())
-    && (date.getMonth() === new Date().getMonth())
+  const sameMonth = (date.getMonth() === new Date().getMonth())
     && (date.getFullYear() === new Date().getFullYear())
+
+  const isToday = (date.getDate() === new Date().getDate()) && sameMonth
+  const isYesterday = (date.getDate() === new Date().getDate() - 1) && sameMonth
+  const isThisWeek = (new Date().getDate() - date.getDate() < 7) && sameMonth
   
   return isToday
     ? `${date.getHours()}:${date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes()}`
-    : date.getDate() === new Date().getDate() - 1
-      ? 'Вчера'
-      : new Date().getDate() - date.getDate() < 7
+    : isYesterday
+      ? 'Yesterday'
+      : isThisWeek
         ? weekDays[date.getDay()]
         : getDate(date)
 }
