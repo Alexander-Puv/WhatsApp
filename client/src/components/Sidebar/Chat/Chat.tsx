@@ -11,7 +11,7 @@ import IMsg from '../../../types/message'
 
 interface ChatProps {
   chatId: string,
-  chatData?: IChat
+  chatData?: IChat,
 }
 
 const Chat = ({chatId, chatData}: ChatProps) => {
@@ -49,15 +49,26 @@ const Chat = ({chatId, chatData}: ChatProps) => {
   const photo = chat.isGroup ? chat.photo : member?.photo
   const title = chat.isGroup ? chat.name : member?.username
 
-  const clickHandler = () => {
-    ChatStore.setCurrentChat(chat)
-    ChatStore.setMember(member)
+  const clickHandler = async () => {
+    const chooseChat = (newChat: IChat) => {
+      ChatStore.setCurrentChat(newChat)
+      ChatStore.setMember(member)
+  
+      newChat.messages.slice().reverse().map((msg, i) =>
+        // we upload only first 25 messages when a user chooses a chat
+        i !== 25 && typeof msg == 'string'
+          && ChatStore.findMsgById(msg)
+      )
+    }
 
-    chat.messages.slice().reverse().map((msg, i) =>
-      // we upload only first 25 messages when a user chooses a chat
-      i !== 25 && typeof msg == 'string'
-        && ChatStore.findMsgById(msg)
-    )
+    try {
+      await ChatStore.findChatById(chat.id) // if chat does not exist, throws a error
+      chooseChat(chat)
+    } catch (e) {
+      const newChat = await ChatStore.createChat(chat.members[0] !== user.uid
+        ? chat.members[0] : chat.members[1]) // actually in this situation reciever is always second but anyway...
+      chooseChat(newChat)
+    }
   }
   
   return (
@@ -65,7 +76,7 @@ const Chat = ({chatId, chatData}: ChatProps) => {
       className={cl.chat + ' ' + (ChatStore.currentChat?.id === chatId ? cl.chatChosen : '')}>
       <div className={cl.chat__left}>
         {photo ?
-          <img src={photo} />
+          <div className={cl.chat__image} style={{backgroundImage: `url(${photo})`}} />
         :
           <UserIcon />
         }
@@ -75,7 +86,7 @@ const Chat = ({chatId, chatData}: ChatProps) => {
           <div className={cl.chat__title}>
             <span>{title}</span>
           </div>
-          <div className={cl.chat__time}>{time}</div>
+          <div className={cl.chat__time}>{lastMsg?.content ? time : null}</div>
         </div>
         <div className={cl.chat__lastMessage}>
           <span>{lastMsg?.content || 'No messages here'}</span>

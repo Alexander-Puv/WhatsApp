@@ -21,19 +21,21 @@ class ChatStore {
     this.member = member
   }
 
-  // find chats
+  // chats
 
-  async findChatById(chatId: string) {
+    // post
+  async createChat(receiverId: string) {
     try {
-      return (await $api.get<IChat>(`${API_URL}/chat/${chatId}`)).data
+      return (await $api.post<IChat>(`${API_URL}/chat`, {receiverId})).data
     } catch (e) {
       throw (e as AxiosError<ApiError>).response?.data
     }
   }
 
-  async findUserById(uid: string) {
+    // get
+  async findChatById(chatId: string) {
     try {
-      return (await $api.get<IUser>(`${API_URL}/user/${uid}`)).data
+      return (await $api.get<IChat>(`${API_URL}/chat/${chatId}`)).data
     } catch (e) {
       throw (e as AxiosError<ApiError>).response?.data
     }
@@ -61,8 +63,20 @@ class ChatStore {
     }
   }
 
+  // users
+
+    // get
+  async findUserById(uid: string) {
+    try {
+      return (await $api.get<IUser>(`${API_URL}/user/${uid}`)).data
+    } catch (e) {
+      throw (e as AxiosError<ApiError>).response?.data
+    }
+  }
+
   // messages
 
+    // post
   async sendMsg(content: string, chatId: string) {
     try {
       const {data} = await $api.post<IMsg>(`${API_URL}/message`, {content, chatId})
@@ -73,6 +87,7 @@ class ChatStore {
     }
   }
 
+    // get
   async findMsgById(id: string) {
     try {
       const {data} = await $api.get<IMsg>(`${API_URL}/message/${id}`)

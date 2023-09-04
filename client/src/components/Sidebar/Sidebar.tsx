@@ -25,7 +25,17 @@ const Sidebar = () => {
         const chats = await ChatStore.findChat(searchQuery)
         setSearchChats(chats[1])
 
-        const chat = chats[0] ? await ChatStore.findChatWithUser(chats[0]) : undefined
+        const foundUser = chats[0]
+        const chat: IChat | undefined = foundUser
+          ? await ChatStore.findChatWithUser(foundUser)
+            || {
+              id: foundUser.uid,
+              createdAt: foundUser.createdAt,
+              isGroup: false,
+              members: [user.uid, foundUser.uid],
+              messages: [],
+            }
+          : undefined
         setUserChat(chat)
       }
     }, 3000)
@@ -64,7 +74,7 @@ const Sidebar = () => {
             <button className={cl.search__button + ' svg-parent'}>
               <AiOutlineSearch />
             </button>
-            <input className={cl.search__input} placeholder='Search or new chat'
+            <input className={cl.search__input} placeholder='Search...'
               autoComplete='off'
               value={searchQuery} onChange={e => setSearchQuery(e.target.value)}/>
             {searchQuery &&

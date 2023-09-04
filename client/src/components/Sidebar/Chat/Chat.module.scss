@@ -20,6 +20,14 @@
     align-items: center;
     justify-content: center;
 
+    .chat__image {
+      width: 49px;
+      height: 49px;
+      background-size: cover;
+      background-position: 50% 50%;
+      border-radius: 50%;
+    }
+
     button {
       width: 49px !important;
       height: 49px !important;
