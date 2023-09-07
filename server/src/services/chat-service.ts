@@ -27,7 +27,7 @@ class ChatService {
     await userModel.findByIdAndUpdate(receiverId, {
       $push: {chats: chat._id}
     })
-    sender.updateOne({$push: {chats: chat._id}})
+    await sender.updateOne({$push: {chats: chat._id}})
 
     return new ChatDto(chat)
   }
@@ -56,7 +56,12 @@ class ChatService {
 
   // get
   async findChatById(id: string) {
-    return new ChatDto(await chatModel.findById(id))
+    const chat = await chatModel.findById(id)
+    if (!chat) {
+      throw ApiError.BadRequest('Chat not found')
+    }
+    
+    return new ChatDto(chat)
   }
 
   async findGroupByName(name: string, page: number, pageSize: number) {
