@@ -8,14 +8,14 @@ import { getSidebarMessageTime } from '../../../utils/getDate'
 import UserIcon from '../../UI/UserIcon'
 import cl from './Chat.module.scss'
 import IMsg from '../../../types/message'
+import { toJS } from 'mobx'
 
 interface ChatProps {
   chatId: string,
-  chatData?: IChat,
+  chat?: IChat,
 }
 
-const Chat = ({chatId, chatData}: ChatProps) => {
-  const [chat, setChat] = useState<IChat | null>(chatData ? chatData : null)
+const Chat = ({chatId, chat}: ChatProps) => {
   const [member, setMember] = useState<IUser | null>(null)
   const [lastMsg, setLastMsg] = useState<IMsg | null>(null)
   
@@ -30,17 +30,29 @@ const Chat = ({chatId, chatData}: ChatProps) => {
       ))
     }
 
+    // !chat && findChat
     const findChat = async () => {
       const chat = await ChatStore.findChatById(chatId)
-      setChat(chat)
-      await findMember(chat)
 
-      const lastMsg = chat.messages[chat.messages.length - 1]
-      setLastMsg(typeof lastMsg === 'string' ? await ChatStore.findMsgById(lastMsg) : lastMsg)
+      ChatStore.setChats([...toJS(ChatStore.chats), chat])
+      ChatStore.setStringChats(toJS(ChatStore.stringChats).filter(val => val !== chat.id))
     }
     
-    !chatData && findChat()
-    chatData && !chatData.isGroup && findMember(chatData)
+    !chat && findChat()
+
+    // chat
+    if (chat) {
+      !chat.isGroup && findMember(chat)
+
+      const changeLastMsg = async () => {
+        const lastMsg = chat.messages[chat.messages.length - 1]
+        setLastMsg(typeof lastMsg === 'string'
+          ? await ChatStore.findMsgById(lastMsg)
+          : lastMsg
+        )
+      }
+      changeLastMsg()
+    }
   }, [])
 
   if (!chat) return <></>

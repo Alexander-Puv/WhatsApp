@@ -11,13 +11,16 @@ import UserIcon from '../UI/UserIcon'
 import Chat from './Chat/Chat'
 import Profile from './Profile/Profile'
 import cl from './Sideabr.module.scss'
+import { toJS } from 'mobx'
 
 const Sidebar = () => {
   const {user} = AppStore
+  const {chats, stringChats} = ChatStore
   const [searchQuery, setSearchQuery] = useState('')
   const [searchChats, setSearchChats] = useState<IChat[] | undefined | null>(null)
   const [userChat, setUserChat] = useState<IChat | undefined | null>(null)
   const [profileOpen, setProfileOpen] = useState(false)
+  const [areChatsSorted, setAreChatsSorted] = useState(false)
   
   useEffect(() => {
     const delayDebounceFn = setTimeout(async () => {
@@ -42,6 +45,33 @@ const Sidebar = () => {
 
     return () => clearTimeout(delayDebounceFn)
   }, [searchQuery])
+
+  useEffect(() => {
+    const sortChats = async () => {
+      const chatPromises = [...toJS(ChatStore.chats)].map(async (chat) => {
+        const lastMsgId = chat.messages[chat.messages.length - 1]
+        const lastMsg = typeof lastMsgId === 'string'
+          ? await ChatStore.findMsgById(lastMsgId)
+          : lastMsgId
+        return { chat, lastMsg }
+      })
+      
+      const chats = await Promise.all(chatPromises)
+      
+      chats.sort((a, b) => {
+        const dateA = a.lastMsg ? new Date(a.lastMsg.createdAt).valueOf() : 0
+        const dateB = b.lastMsg ? new Date(b.lastMsg.createdAt).valueOf() : 0
+        
+        return dateB - dateA
+      })
+      
+      const sortedChats = chats.map(({ chat }) => chat)
+  
+      ChatStore.setChats(sortedChats)
+      setAreChatsSorted(true)
+    }
+    chats.length && !areChatsSorted && sortChats()
+  }, [chats])
 
   const closeSearch = () => {
     setSearchQuery('')
@@ -91,14 +121,17 @@ const Sidebar = () => {
 
         <div className={cl.sidebar__scroll}>
           <div className={`${cl.sidebar__chats} ${(userChat || searchChats) && cl.hidden}`}>
-            {user.chats?.map(chatId =>
+            {stringChats.map(chatId =>
               <Chat chatId={chatId} key={chatId} />
+            )}
+            {chats.map(chat =>
+              <Chat chatId={chat.id} key={chat.id} chat={chat} />
             )}
           </div>
           {(userChat || searchChats) && <div className={cl.sidebar__chats}>
-            {userChat && <Chat chatId={userChat.id} chatData={userChat} />}
+            {userChat && <Chat chatId={userChat.id} chat={userChat} />}
             {searchChats?.map((group) =>
-              <Chat chatId={group.id} chatData={group} key={group.id} />
+              <Chat chatId={group.id} chat={group} key={group.id} />
             )}
           </div>}
         </div>

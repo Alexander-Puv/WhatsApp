@@ -7,6 +7,8 @@ import ApiError from "../types/api/apiError"
 import IMsg from "../types/message"
 
 class ChatStore {
+  chats: IChat[] = []
+  stringChats: string[] = []
   currentChat: IChat | null = null
   member: IUser | null = null
   
@@ -14,6 +16,12 @@ class ChatStore {
     makeAutoObservable(this)
   }
 
+  setChats(chats: IChat[]) {
+    this.chats = chats
+  }
+  setStringChats(stringChats: string[]) {
+    this.stringChats = stringChats
+  }
   setCurrentChat(chat: IChat | null) {
     this.currentChat = chat
   }

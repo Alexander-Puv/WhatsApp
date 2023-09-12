@@ -3,13 +3,13 @@ import IMsg from "./message";
 type IChat = { // if chat
   isGroup: false,
   id: string,
-  createdAt: Date,
+  createdAt: string,
   members: string[],
   messages: (IMsg | string)[],
 } | { // if group
   isGroup: true,
   id: string,
-  createdAt: Date,
+  createdAt: string,
   members: string[],
   messages: (IMsg | string)[],
   name: string,
